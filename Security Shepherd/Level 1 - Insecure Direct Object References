@@ -1,0 +1,46 @@
+What are Insecure Direct Object References?
+Imagine a web page that allows you to view your personal information. The web page that shows the user their information is generated 
+based on a user ID. If this page was vulnerable to insecure Direct Object References an attacker would be able to modify the user 
+identifier parameter to reference any user object in the system. Insecure Direct Object References occur when an application references 
+an object by its actual ID or name. This object that is referenced directly is used to generate a web page. If the application does not 
+verify that the user is allowed to reference this object, then the object is insecurely referenced.
+
+Attackers can use insecure object references to compromise any information that can be referenced by the parameter in question. In the 
+above example, the attacker can access any user's personal information.
+
+The severity of insecure direct object references varies depending on the data that is compromised. If the compromised data is publicly 
+available or not supposed to be restricted, it becomes a very low severity vulnerability. Consider a scenario where one company is able 
+to retrieve their competitor's information. Suddenly, the business impact of the vulnerability is critical. These vulnerabilities still 
+need to be fixed and should never be found in professional grade applications.
+
+The result key to complete this lesson is stored in the administrators profile.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+User: Guest
+Age:	22
+Address:	54 Kevin Street, Dublin
+Email:	guestAccount@securityShepherd.com
+Private Message:	No Private Message Set
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+step: 1
+Clicking the Refresh your profile resets and shows the user data/
+
+step: 2
+opening burpsuite we can examin the post request made to the server here we can see what was sent, and can clearly see it says 
+username=guest
+
+step: 3 
+turn on interception mode and clicking refresh again allows me to modify the username from guest to admin. 
+
+Step: 4
+upon clicking forward with the modivation, I can clearly see the the Administraotr account details and the key for the next level
+
+
+User: Admin
+Age:	43
+Address:	12 Bolton Street, Dublin
+Email:	administratorAccount@securityShepherd.com
+Private Message:	Result Key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

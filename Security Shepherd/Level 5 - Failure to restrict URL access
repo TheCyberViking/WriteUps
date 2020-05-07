@@ -1,0 +1,48 @@
+
+What is a Failure to Restrict URL Access?
+
+An application that fails to restrict URL access is an application that is not protecting its "protected" pages sufficiently. This occurs 
+when an application hides functionality from basic users. In an application that fails to restrict URL access, administration links are 
+only put onto the page if the user is an administrator. If users discover a page's address, they can still access it via URL access.
+
+Preventing unauthorized URL access requires selecting an approach for requiring proper authentication and proper authorization for each 
+page. The easier the authentication is to include in a page the more likely that all pages will be covered by the policy.
+
+
+The result key to this lesson is stored in a web page only administrators know about. 
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+step 1: 
+inspect element on the web link, we see a div called hiddenDiv this states is only for Administrators
+with the following 
+
+<div id="hiddenDiv" style="display: none;">
+					<!-- This is only displayed for Administrators -->
+					<a href="adminOnly/resultKey.jsp">
+						Administrator Result Page
+					</a>
+				</div>
+
+
+Step 2: 
+modifying the style to
+
+style="display: block;"
+
+this allows a pacge to be displayed
+Administrator Result Page
+
+
+Step 3: 
+Clicking on the new link will give you access to the Key
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+
+Solution Submission Success
+Failure to Restrict URL Access completed! Congratulations.
+
+
+
+

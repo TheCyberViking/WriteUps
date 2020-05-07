@@ -1,0 +1,36 @@
+What is Broken Authentication and Session Management?
+
+Attacks against an application's authentication and session management can be performed using security risks that other vulnerabilities present. For example, any application's session management can be overcome when a Cross Site Scripting vulnerability is used to steal user session tokens. This topic is more about flaws that exist in the applications authentication and session management schema.
+
+Broken authentication and session management flaws are commonly found in functionalities such as logout, password management, secret question and account update. An attack can potentially abuse these functions to modify other users credentials by guessing their secret question or through parameter abuse. Finding such flaws can sometimes be difficult, as each implementation is unique.
+
+The following scenarios are vulnerable to these security risks;
+1) User credentials are stored with insufficient cryptographic levels.
+2) User credentials can be guessed or changed through poor account management.
+3) Session identifiers are exposed in the URL.
+4) The application does not use sufficient transport protection (Such as HTTPs or sFTP).
+5) Session parameters can be manually changed by the user through application functionality.
+
+Session parameters can be manually changed by the user through application functionality.
+
+This lesson implements bad session management. Investigate the following function to see if you trick the server into thinking you have already completed this lesson to retrieve the result key.
+
+
+Step 1:
+examine the behaviour, but hitting the complete challenge button and I get the following 
+
+Lesson Not Complete
+You have not completed this lesson yet.
+
+Step 2: checking the details in burpsuite under cookie we can see : lessonNotComplete 
+
+Step 3: turn on interception and modify the lessonNotComplete to lessonComplete and hit forward
+
+I recived the responses
+
+Lesson Complete
+Congratulations, you have bypassed this lessons VERY WEAK session management. The result key for this lesson is 
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+

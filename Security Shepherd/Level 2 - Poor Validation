@@ -1,0 +1,52 @@
+What is Poor Data Validation?
+
+Poor Data Validation occurs when an application does not validate submitted data correctly or sufficiently. Poor Data Validation 
+application issues are generally low severity, they are more likely to be coupled with other security risks to increase their impact. 
+If all data submitted to an application is validated correctly, security risks are significantly more difficult to exploit.
+
+Attackers can take advantage of poor data validation to perform business logic attacks or cause server errors.
+
+When data is submitted to a web application, it should ensure that the data is strongly typed, has correct syntax, is within length 
+boundaries, contains only permitted characters and within range boundaries. The data validation process should ideally be performed on 
+the client side and again on the server side.
+
+
+
+To get the result key to this lesson, you must bypass the validation in the following function and submit a negative number.
+
+Enter a Number: _____________
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Step 1: check the behavior of the box 
+
+Entering the number 1 gives this response after a little delay 
+
+Valid Number Submitted
+The Number 1 is a valid number.
+
+if i enter -1 I get the following 
+ An Error Occurred:Invalid Number: Number must be greater than 0
+ 
+ 
+ Step 2:
+ upon checking the burpswuite for histroy we can see in clear data that userdata=1
+ 
+ when entering 2 in the box it shows up userdata=2 +
+ entering -1 or -2 does not give a request.
+ so we can see we can direclty impact the post request as it seems to be handelded client side
+ 
+ 
+Step 3:
+starting the interception and entering a valid number of 2 we can see the request in the interceptor on burpsuite, modifying this to
+minus "-1" and forwarding the request to the server. it goes trough and gives is the following showing that the validation was bypassed
+and the info was sent to the server. 
+
+Validation Bypassed
+
+You defeated the lesson validation. Result Key: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+ 
+ 
+ 
+

