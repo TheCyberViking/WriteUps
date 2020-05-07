@@ -1,0 +1,70 @@
+DNS: Basic Queries
+
+The target server as described below is running a DNS server. You have to interact with this DNS server and answer the following questions:
+
+Note: Please make sure to specify the target DNS server (192.X.Y.3) while making the DNS queries/requests. This server is NOT configured in the attacker machine. Hence, we need to specify it explicitly. 
+
+Questions:
+
+What is the ip address of primary Name server of witrap.com ?
+What is the ipv4 address of witrap.com ?
+What is the ipv6 address of witrap.com ?
+How many mail server does witrap.com have?
+What is the IP address of Mail Server of witrap.com which has highest priority?
+What is the Canonical Name of www.witrap.com?
+Which Certificate Authorities can Issue certificate for witrap.com?
+What is the Geographical location of witrap.com ?
+Can you find the flag provided in the information of witrap.com?
+What is the  IP address of machine which support sip over TCP on witrap.com?
+What is the administrative email of witrap.com?
+Which domain corresponds to 192.168.67.8 ?
+
+
+Instructions: 
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The target server should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1 
+postgresql is not running by default so Metasploit may give you an error about this when starting
+
+
+
+
+What is the ip address of primary Name server of witrap.com ?
+
+
+What is the ipv4 address of witrap.com ?
+
+
+What is the ipv6 address of witrap.com ?
+
+
+How many mail server does witrap.com have?
+
+
+What is the IP address of Mail Server of witrap.com which has highest priority?
+
+
+What is the Canonical Name of www.witrap.com?
+
+
+Which Certificate Authorities can Issue certificate for witrap.com?
+
+
+What is the Geographical location of witrap.com ?
+
+
+Can you find the flag provided in the information of witrap.com?
+
+
+What is the  IP address of machine which support sip over TCP on witrap.com?
+
+
+What is the administrative email of witrap.com?
+
+
+Which domain corresponds to 192.168.67.8 ?
+
+

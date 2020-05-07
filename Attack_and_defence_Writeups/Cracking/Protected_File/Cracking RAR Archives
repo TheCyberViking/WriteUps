@@ -1,0 +1,12 @@
+An encrypted RAR archive containing a flag bearing file is provided. The archive password is chosen either from a dictionary or using the password policy. The RAR file and the dictionary file "1000000-password-seclists.txt" are present in the user's home directory.
+
+Objective: Recover the password and get the token
+
+If the dictionary attack does not work then the Password Policy could be:
+Password length is less than 6 characters i.e. 0 < length < 6
+Password can only contain characters from this character set:  a-z, 0-9
+John the Ripper and Hashcat are available on the system.
+
+
+flag = 75f2de1367df5838697b0df8dc23c624
+password = 1qaz2wsx

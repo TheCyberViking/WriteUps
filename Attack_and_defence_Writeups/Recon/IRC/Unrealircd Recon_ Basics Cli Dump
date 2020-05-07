@@ -1,0 +1,119 @@
+root@attackdefense:~# ip addr
+513: eth0@if514: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:0a:01:01:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.3/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+516: eth1@if517: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:c0:48:e5:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.72.229.2/24 brd 192.72.229.255 scope global eth1
+       valid_lft forever preferred_lft forever
+root@attackdefense:~# ping 192.72.229.3
+PING 192.72.229.3 (192.72.229.3) 56(84) bytes of data.
+64 bytes from 192.72.229.3: icmp_seq=1 ttl=64 time=0.143 ms
+64 bytes from 192.72.229.3: icmp_seq=2 ttl=64 time=0.070 ms
+^C
+--- 192.72.229.3 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 29ms
+rtt min/avg/max/mdev = 0.070/0.106/0.143/0.037 ms
+root@attackdefense:~# nmap -sV -p- 192.72.229.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 12:25 UTC
+Nmap scan report for target-1 (192.72.229.3)
+Host is up (0.000017s latency).
+Not shown: 65532 closed ports
+PORT     STATE SERVICE VERSION
+6667/tcp open  irc
+6697/tcp open  irc
+6900/tcp open  irc
+MAC Address: 02:42:C0:48:E5:03 (Unknown)
+Service Info: Host: irc.hacknetwork.xyz
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.14 seconds
+root@attackdefense:~#
+root@attackdefense:~# nmap -sV -p- -script banner 192.72.229.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 12:27 UTC
+Nmap scan report for target-1 (192.72.229.3)
+Host is up (0.000014s latency).
+Not shown: 65532 closed ports
+PORT     STATE SERVICE VERSION
+6667/tcp open  irc
+| banner: ERROR :Closing Link: [192.72.229.2] (Throttled: Reconnecting to
+|_o fast) -Email blocked-support@localhost.xyz for more information.
+6697/tcp open  irc     UnrealIRCd (Admin email blocked-support@localhost.xyz)
+| banner: ERROR :Closing Link: [192.72.229.2] (Throttled: Reconnecting to
+|_o fast) -Email blocked-support@localhost.xyz for more information.
+6900/tcp open  irc     UnrealIRCd (Admin email blocked-support@localhost.xyz)
+| banner: ERROR :Closing Link: [192.72.229.2] (Throttled: Reconnecting to
+|_o fast) -Email blocked-support@localhost.xyz for more information.
+MAC Address: 02:42:C0:48:E5:03 (Unknown)
+Service Info: Host: irc.hacknetwork.xyz
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.20 seconds
+root@attackdefense:~# 
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.20 seconds
+root@attackdefense:~# cd tools/
+root@attackdefense:~/tools# ls
+Delorean  GitTools  JohnTheRipper  exfil  firepwd  ircsnapshot  known_hosts-hashcat  portable  reGeorg  scripts  srtp-decrypt  steganography
+root@attackdefense:~/tools# cd ircsnapshot/
+root@attackdefense:~/tools/ircsnapshot# ls
+example.png  ircsnapshot.py  run_from_json.py  source  to.gexf.py
+root@attackdefense:~/tools/ircsnapshot# python ircsnapshot.py 192.72.229.3
+Namespace(channels=None, help=False, listdelay=None, nick='HSTZxbDFLl', no_list=False, output='.', password=None, port='6667', proxy=None, real='GFkpGDwdgt', server='192.72.229.3', ssl=False, throttle=1.0, user='YIdQKcDckw')
+[2019-09-29 12:29:19,320] Logger initiated
+[2019-09-29 12:29:19,321] {"real": "GFkpGDwdgt", "nick": "HSTZxbDFLl", "config": {"proxyport": 9050, "real": "GFkpGDwdgt", "listDelay": null, "nolist": false, "ssl": false, "throttleLevel": 1.0, "user": "YIdQKcDckw", "pass": null, "server": "192.72.229.3", "outputdir": ".", "channelstocheck": null, "proxyhost": null, "port": "6667", "nick": "HSTZxbDFLl"}, "user": "YIdQKcDckw"}
+[2019-09-29 12:29:19,322] USER YIdQKcDckw 127.0.0.1 192.72.229.3 :GFkpGDwdgt
+[2019-09-29 12:29:19,322] NICK HSTZxbDFLl
+[2019-09-29 12:29:19,322] :irc.hacknetwork.xyz NOTICE * :*** Looking up your hostname...
+[2019-09-29 12:29:19,324] :irc.hacknetwork.xyz NOTICE * :*** Couldn't resolve your hostname; using your IP address instead
+[2019-09-29 12:29:19,368] PING :38FBB7CA
+[2019-09-29 12:29:19,368] PONG :38FBB7CA
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 001 HSTZxbDFLl :Welcome to the MYNet IRC Network HSTZxbDFLl!YIdQKcDckw@192.72.229.2
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 002 HSTZxbDFLl :Your host is irc.hacknetwork.xyz, running version UnrealIRCd-4.2.0
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 003 HSTZxbDFLl :This server was created Tue Nov 20 2018 at 09:38:20 UTC
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 004 HSTZxbDFLl irc.hacknetwork.xyz UnrealIRCd-4.2.0 iowrsxzdHtIDZRqpWGTSB lvhopsmntikraqbeIzMQNRTOVKDdGLPZSCcf
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 005 HSTZxbDFLl UHNAMES NAMESX SAFELIST HCN MAXCHANNELS=10 CHANLIMIT=#:10 MAXLIST=b:60,e:60,I:60 MAXNICKLEN=30 NICKLEN=30 CHANNELLEN=32 TOPICLEN=307 KICKLEN=307 AWAYLEN=307 :are supported by this server
+10
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 005 HSTZxbDFLl MAXTARGETS=20 WALLCHOPS WATCH=128 WATCHOPTS=A SILENCE=15 MODES=12 CHANTYPES=# PREFIX=(qaohv)~&@%+ CHANMODES=beI,kLf,l,psmntirzMQNRTOVKDdGPZSCc NETWORK=MYNet CASEMAPPING=ascii EXTBAN=~,tmTSOcaRrnqj ELIST=MNUCT :are supported by this server
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 005 HSTZxbDFLl STATUSMSG=~&@%+ EXCEPTS INVEX CMDS=USERIP,STARTTLS,KNOCK,DCCALLOW,MAP :are supported by this server
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 396 HSTZxbDFLl 4FFA27F5.A85D1518.4AE5B956.IP :is now your displayed host
+[2019-09-29 12:29:19,371] :irc.hacknetwork.xyz 251 HSTZxbDFLl :There are 1 users and 0 invisible on 1 servers
+[2019-09-29 12:29:19,372] :irc.hacknetwork.xyz 255 HSTZxbDFLl :I have 1 clients and 0 servers
+[2019-09-29 12:29:19,372] :irc.hacknetwork.xyz 265 HSTZxbDFLl 1 1 :Current local users 1, max 1
+[2019-09-29 12:29:19,372] :irc.hacknetwork.xyz 266 HSTZxbDFLl 1 1 :Current global users 1, max 1
+[2019-09-29 12:29:19,372] :irc.hacknetwork.xyz 422 HSTZxbDFLl :MOTD File is missing
+[2019-09-29 12:29:19,372] LIST
+[2019-09-29 12:29:19,372] LINKS
+[2019-09-29 12:29:19,372] NAMES
+[2019-09-29 12:29:19,372] :HSTZxbDFLl MODE HSTZxbDFLl :+iwx
+[2019-09-29 12:29:19,372] :irc.hacknetwork.xyz 321 HSTZxbDFLl Channel :Users  Name
+[2019-09-29 12:29:19,372] :irc.hacknetwork.xyz 323 HSTZxbDFLl :End of /LIST
+[2019-09-29 12:29:19,373] :irc.hacknetwork.xyz 364 HSTZxbDFLl irc.hacknetwork.xyz irc.hacknetwork.xyz :0 Sample IRC Server for target practice
+[2019-09-29 12:29:19,416] :irc.hacknetwork.xyz 365 HSTZxbDFLl * :End of /LINKS list.
+[2019-09-29 12:29:19,416] :irc.hacknetwork.xyz 366 HSTZxbDFLl * :End of /NAMES list.
+[2019-09-29 12:29:19,416] join * not found in is_processing
+[2019-09-29 12:29:19,416] []
+[2019-09-29 12:29:19,417] PART *
+[2019-09-29 12:29:19,417] :irc.hacknetwork.xyz 403 HSTZxbDFLl * :No such channel
+[2019-09-29 12:29:20,579] QUIT :
+[2019-09-29 12:29:20,588] ERROR :Closing Link: HSTZxbDFLl[192.72.229.2] (Quit: HSTZxbDFLl)
+[2019-09-29 12:29:20,589] Disconnected
+root@attackdefense:~/tools/ircsnapshot# irssi -c 192.222.4.3 -n guest
+
+************** OPENS IRC CONNECTION TO SERVER WITH DETAILS **************
+
+Following commands used when in server
+/VERSION = gave server version data 
+/HELP = gave listing of all the supported commands on the server
+/LIST = gave listing of all the avilable channels 
+/JOIN #CHANNEL = command to join other channels on the server
+/LEAVE = leaves the current channel
+/OPER NAME user@pass = allows the user to connect into operator mode
+
+*********************** END OF CHALLENGE *********************************

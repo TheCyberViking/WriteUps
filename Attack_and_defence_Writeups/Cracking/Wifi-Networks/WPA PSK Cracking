@@ -1,0 +1,26 @@
+WPA PSK Cracking - EASY
+
+WPA PSK was created as a replacement for the broken WEP encryption. It addresses the inadequacies of WEP and is fairly robust against the cryptographic attacks which effected its predecessor. The PSK part stands for Pre Shared Key, which is a secret key shared in advance by both the access point and the clients. Unfortunately, this key is derived from the passphrase entered by the network user/administrator. This makes it susceptible to dictionary attacks as users might choose a weak passphrase. 
+
+In this exercise, you will learn how to crack the WPA PSK key of a network assuming you have captured the initial 4 way handshake between the access point and the client. It is also assumed that the passphrase is a common word. 
+
+Objective:
+
+The challenge PCAP can be found in the home folder of the user. It contains traffic from a WPA-PSK secured SSID "SecurityTube". The objective is clear. You have to launch cracking attack and recover the pre-shared passphrase used. In the process of doing this, find the following: 
+
+MAC address of the access point
+MAC address of the client(s)
+WPA PSK key of the network
+
+Password list source: https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+
+
+
+
+View the Pcap - tshark -r WPA-PSK.pcap
+
+view the fourway handshake - airodump-ng -r WPA-PSK.pcap  - see the BSSID & Client =  BSSID 00:21:91:D2:8E:25 and Client 60:FB:42:D5:E4:01
+
+crack with wordlist - aircrack-ng -w 1000000-password-seclists.txt -b 00:21:91:d2:8e:25  WPA-PSK.pcap
+
+answer = abcdefgh

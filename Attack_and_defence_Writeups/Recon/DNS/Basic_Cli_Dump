@@ -1,0 +1,28 @@
+root@attackdefense:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+4458: eth0@if4459: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:0a:01:01:0b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.11/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+4461: eth1@if4462: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:f1:09:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.241.9.2/24 brd 192.241.9.255 scope global eth1
+       valid_lft forever preferred_lft forever
+      
+root@attackdefense:~# nslookup
+> lserver 192.241.9.3
+Default server: 192.241.9.3
+Address: 192.241.9.3#53
+> witrap.com
+Server:         192.241.9.3
+Address:        192.241.9.3#53
+
+Name:   witrap.com
+Address: 192.168.66.2
+Name:   witrap.com
+Address: 2001:db8::1:0:0:13
+> ^Z
+

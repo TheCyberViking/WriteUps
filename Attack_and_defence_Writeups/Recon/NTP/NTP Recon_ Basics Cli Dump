@@ -1,0 +1,43 @@
+root@attackdefense:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+13: eth0@if14: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:0a:01:01:04 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.4/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+16: eth1@if17: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:79:fd:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.121.253.2/24 brd 192.121.253.255 scope global eth1
+       valid_lft forever preferred_lft forever
+       
+root@attackdefense:~# ping 192.121.253.3
+PING 192.121.253.3 (192.121.253.3) 56(84) bytes of data.
+64 bytes from 192.121.253.3: icmp_seq=1 ttl=64 time=0.145 ms
+64 bytes from 192.121.253.3: icmp_seq=2 ttl=64 time=0.076 ms
+64 bytes from 192.121.253.3: icmp_seq=3 ttl=64 time=0.101 ms
+64 bytes from 192.121.253.3: icmp_seq=4 ttl=64 time=0.073 ms
+^C
+--- 192.121.253.3 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 75ms
+rtt min/avg/max/mdev = 0.073/0.098/0.145/0.031 ms
+
+root@attackdefense:~# nmap -sV -sU -p123 192.121.253.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-03-07 15:07 UTC
+Nmap scan report for eh9n338tronblmyi6voagnis0.temp-network_a-121-253 (192.121.253.3)
+Host is up (0.000060s latency).
+
+PORT    STATE SERVICE VERSION
+123/udp open  ntp     NTP v4 (unsynchronized)
+MAC Address: 02:42:C0:79:FD:03 (Unknown)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.57 seconds
+root@attackdefense:~#
+root@attackdefense:~# ntpq -c "rv 0 clock" 192.121.253.3
+clock=e02bb2c1.123bf9ff  Thu, Mar  7 2019 15:09:53.071
+root@attackdefense:~#
+
+
+

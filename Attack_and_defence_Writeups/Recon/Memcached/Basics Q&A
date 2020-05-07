@@ -1,0 +1,49 @@
+Memcached Recon: Basics
+
+
+In this challenge we will look at the basics of Memcached server reconnaissance.  Please start the lab and answer the following questions:
+
+Questions
+
+Find the version of memcached server using nmap.
+Find the version information using netcat or telnet.
+Find the maximum number of simultaneous incoming connections allowed by the memcached server use available nmap scripts.
+Find the number of current items on the memcached server using memcstat.
+Find the value stored in key “flag” from the key value pairs dumped by available metasploit module.
+Find the name of all keys present on the memcached server using memcdump.
+Find the value stored in key “first_name” using memcached-tool.
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1 
+
+
+The Answers
+
+1 - 1.5.6
+
+
+2 - VERSION 1.5.6 Ubuntu
+
+
+3 - 2147
+
+
+4 - 10
+
+
+5 -  25c8dc1c75c9965dff9afd3c8ced2775
+
+
+6 - flag,password,country,zip,state,city,address,nick_name,last_name,first_name
+
+
+7 - Jimmy
+
+
+
+

@@ -1,0 +1,14 @@
+Webgoat is a deliberately vulnerable web application maintained by OWASP. It is licensed under GPLv2.
+
+[This lab can take over 2 minutes to load after opening the URL]
+
+You can download Webgoat locally and install it in a virtual machine. We are providing an online version to save you time and pain of having to do that. 
+
+A sample set of vulnerabilities include:
+
+Cross Site Scripting
+Access Control Flaw
+Buffer Overflow
+Injection Flaw
+Malicious Execution
+and many more. 

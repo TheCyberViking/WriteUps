@@ -1,0 +1,23 @@
+WPA2 PSK Cracking III -  Intermediate 
+
+WiFi Protected Access (WPA2) cracking works by generating the Pairwise Master Key (PMK) for each passphrase present in the dictionary and then using it to crack the packets. However, in order to derive the PMK, the algorithm needs more information than just the EAPOL packets. Without all the relevant info, the tool will fail. 
+
+Objective:
+
+Two traffic captures of an SSID are provided along with a dictionary. Launch the attack and recover the password.
+
+Password list source: https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt  
+
+
+
+first we need to find the SSID and BSSID
+
+- tshark -r WPA2-PSK-Capture2.cap -Y 'wlan.fc.type_subtype == 0x0008' -Tfields -e wlan.ssid -e wlan.bssid
+
+Asnwer =  WiFi-wpa & b8:a3:86:49:f2:4e
+
+then we need to crack the file with the known information
+
+aircrack-ng -w 1000000-password-seclists.txt -e WiFi-wpa -b b8:a3:86:49:f2:4e WPA2-PSK-Capture1.cap
+
+Answer = cherry123

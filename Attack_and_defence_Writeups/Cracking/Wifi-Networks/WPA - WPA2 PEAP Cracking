@@ -1,0 +1,16 @@
+WPA/WPA2 PEAP Cracking - Intermediate
+
+WPA/WPA2 Enterprise networks using only server side certificate based authentication are susceptible to honeypot attacks. An attacker can setup a honeypot with the same SSID as the authorized network and lure an authorized client to connect to it. Once the client connects and if its wireless connection utility does not properly check for a valid authorized certificate, then the utility will complete authentication using the attacker supplied certificate. The attacker can now look at the PEAP authentication log on his honeypot and then begin the cracking process!  
+
+Objective
+
+We have made the log file of the attacker's honeypot setup available, along with the popular tool asleap required to crack the password using a dictionary attack.
+
+Password list source: https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+
+
+use Asleap - simulate a SSID honeypot, the victim joins and the certifcate is grabbed and cracked
+
+asleap -C c9:db:48:a9:7b:0e:e9:04 -R bb:c9:cf:16:27:bc:ee:16:7e:21:3a:59:4c:1c:97:d1:25:10:af:d7:81:6e:88:87 -W 1000000-password-seclists.txt
+
+Answer = demo12345

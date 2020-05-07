@@ -1,0 +1,21 @@
+WPA2 PSK Cracking - EASY
+
+
+WPA2-PSK is more robust from a security standpoint than WPA-PSK. However, it is also susceptible to dictionary/bruteforce attacks just like WPA-PSK. Unfortunately, the standard did not address the problem if users choosing weak passphrases. 
+
+Objective:
+
+The challenge PCAP can be found in the home folder of the user. It contains traffic from a WPA2-PSK secured SSID "SecurityTube". The objective is simple - launch a cracking attack and recover the pre-shared passphrase used.
+
+
+Password list source: https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+
+
+
+view the pcap file - tshark -r WPA2-PSK.pcap
+
+view 4 way handshake, bssid and client - airodump-ng -r WPA2-PSK.pcap = BSSID 00:21:91:D2:8E:25 and Client 60:FB:42:D5:E4:01
+
+crack with wordlist - aircrack-ng -w 1000000-password-seclists.txt -b 00:21:91:d2:8e:25  WPA2-PSK.pcap
+
+Answer = abcdefgh

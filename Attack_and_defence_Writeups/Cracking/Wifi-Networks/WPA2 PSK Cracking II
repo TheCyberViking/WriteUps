@@ -1,0 +1,21 @@
+WPA2 PSK Cracking II - Intermediate 
+
+This is another example for cracking WPA2-PSK.
+
+Objective:
+
+The challenge PCAP can be found in the home folder of the user. It contains traffic from a WPA2-PSK secured SSID "WiFi-wpa". Crack the network credentials! 
+
+
+Password list source: https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+
+
+
+view the pcap file - tshark -r WPA2-PSK.cap
+
+
+look for handshake, BSSID and CLient - airodump-ng -r WPA2-PSK.cap = BSSID B8:A3:86:49:F2:4E and Client 78:A3:E4:3E:CE:1E
+
+crack with worklist - aircrack-ng -w 1000000-password-seclists.txt -b B8:A3:86:49:F2:4E  WPA2-PSK.cap
+
+Answer = wilkinson330

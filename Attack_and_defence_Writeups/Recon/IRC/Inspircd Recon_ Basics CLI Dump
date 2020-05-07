@@ -1,0 +1,167 @@
+root@attackdefense:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+527: eth0@if528: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:0a:01:01:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.3/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+530: eth1@if531: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:c0:a9:56:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.169.86.2/24 brd 192.169.86.255 scope global eth1
+       valid_lft forever preferred_lft forever
+root@attackdefense:~# ping 192.169.86.3
+PING 192.169.86.3 (192.169.86.3) 56(84) bytes of data.
+64 bytes from 192.169.86.3: icmp_seq=1 ttl=64 time=0.117 ms
+^C
+--- 192.169.86.3 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.117/0.117/0.117/0.000 ms
+root@attackdefense:~# nmap -sV -p- 192.169.86.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 12:44 UTC
+Nmap scan report for target-1 (192.169.86.3)
+Host is up (0.000013s latency).
+Not shown: 65531 closed ports
+PORT     STATE SERVICE    VERSION
+6667/tcp open  irc        InspIRCd
+6697/tcp open  irc        InspIRCd
+7000/tcp open  tcpwrapped
+7001/tcp open  tcpwrapped
+MAC Address: 02:42:C0:A9:56:03 (Unknown)
+Service Info: Host: irc.hackernet.xyz
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.23 seconds
+root@attackdefense:~# nmap -p- -script banner 192.169.86.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 12:45 UTC
+Nmap scan report for target-1 (192.169.86.3)
+Host is up (0.000014s latency).
+Not shown: 65531 closed ports
+PORT     STATE SERVICE
+6667/tcp open  irc
+| banner: :irc.hackernet.xyz NOTICE Auth :*** Looking up your hostname...
+|_\x0D\x0A:irc.hackernet.xyz NOTICE Auth :*** Could not resolve your h...
+6697/tcp open  ircs-u
+| banner: :irc.hackernet.xyz NOTICE Auth :*** Looking up your hostname...
+|_\x0D\x0A:irc.hackernet.xyz NOTICE Auth :*** Could not resolve your h...
+7000/tcp open  afs3-fileserver
+7001/tcp open  afs3-callback
+MAC Address: 02:42:C0:A9:56:03 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 7.08 seconds
+root@attackdefense:~# 
+root@attackdefense:~# nmap -sV -sC 192.169.86.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 12:47 UTC
+Nmap scan report for target-1 (192.169.86.3)
+Host is up (0.000014s latency).
+Not shown: 997 closed ports
+PORT     STATE SERVICE    VERSION
+6667/tcp open  irc        InspIRCd
+| irc-info: 
+|   server: irc.hackernet.xyz
+|   users: 1
+|   servers: 1
+|   chans: 0
+|   lusers: 1
+|   lservers: 0
+|   source ident: nmap
+|   source host: 192.169.86.2
+|_  error: Closing link: (nmap@192.169.86.2) [Client exited]
+7000/tcp open  tcpwrapped
+|_irc-info: Unable to open connection
+7001/tcp open  tcpwrapped
+MAC Address: 02:42:C0:A9:56:03 (Unknown)
+Service Info: Host: irc.hackernet.xyz
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 5.86 seconds
+root@attackdefense:~# 
+root@attackdefense:~# cd tools/
+root@attackdefense:~/tools# ls
+Delorean       exfil        known_hosts-hashcat  scripts
+GitTools       firepwd      portable             srtp-decrypt
+JohnTheRipper  ircsnapshot  reGeorg              steganography
+root@attackdefense:~/tools# cd ircsnapshot/
+root@attackdefense:~/tools/ircsnapshot# ls
+example.png  ircsnapshot.py  run_from_json.py  source  to.gexf.py
+root@attackdefense:~/tools/ircsnapshot# python ircsnapshot.py 192.169.86.3
+Namespace(channels=None, help=False, listdelay=None, nick='yHmxbCDdie', no_list=False, output='.', password=None, port='6667', proxy=None, real='qXSlYGEsSs', server='192.169.86.3', ssl=False, throttle=1.0, user='LLCwMvQuOQ')
+[2019-09-29 12:48:51,102] Logger initiated
+[2019-09-29 12:48:51,105] {"real": "qXSlYGEsSs", "nick": "yHmxbCDdie", "config": {"proxyport": 9050, "real": "qXSlYGEsSs", "listDelay": null, "nolist": false, "ssl": false, "throttleLevel": 1.0, "user": "LLCwMvQuOQ", "pass": null, "server": "192.169.86.3", "outputdir": ".", "channelstocheck": null, "proxyhost": null, "port": "6667", "nick": "yHmxbCDdie"}, "user": "LLCwMvQuOQ"}
+[2019-09-29 12:48:51,109] USER LLCwMvQuOQ 127.0.0.1 192.169.86.3 :qXSlYGEsSs
+[2019-09-29 12:48:51,111] NICK yHmxbCDdie
+[2019-09-29 12:48:51,112] :irc.hackernet.xyz NOTICE Auth :*** Looking up your hostname...
+[2019-09-29 12:48:51,112] :irc.hackernet.xyz NOTICE Auth :*** Could not resolve your hostname: Invalid char(s) in reply; using your IP address (192.169.86.2) instead.
+[2019-09-29 12:48:52,114] :irc.hackernet.xyz NOTICE Auth :Welcome to hackernet!
+[2019-09-29 12:48:52,116] :irc.hackernet.xyz 001 yHmxbCDdie :Welcome to the hackernet IRC Network yHmxbCDdie!LLCwMvQuOQ@192.169.86.2
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 002 yHmxbCDdie :Your host is irc.hackernet.xyz, running version InspIRCd-2.0
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 003 yHmxbCDdie :This server was created 09:30:58 Mar 20 2019
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 004 yHmxbCDdie irc.hackernet.xyz InspIRCd-2.0 iosw biklmnopstv bklov
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 005 yHmxbCDdie AWAYLEN=200 CASEMAPPING=rfc1459 CHANMODES=b,k,l,imnpst CHANNELLEN=64 CHANTYPES=# CHARSET=ascii ELIST=MU FNC KICKLEN=255 MAP MAXBANS=60 MAXCHANNELS=20 MAXPARA=32 :are supported by this server
+20
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 005 yHmxbCDdie MAXTARGETS=20 MODES=20 NETWORK=hackernet NICKLEN=31 PREFIX=(ov)@+ STATUSMSG=@+ TOPICLEN=307 VBANLIST WALLCHOPS WALLVOICES :are supported by this server
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 042 yHmxbCDdie 454AAAEU6 :your unique ID
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 422 yHmxbCDdie :Message of the day file is missing.
+[2019-09-29 12:48:52,117] LIST
+[2019-09-29 12:48:52,117] LINKS
+[2019-09-29 12:48:52,117] NAMES
+[2019-09-29 12:48:52,117] :irc.hackernet.xyz 251 yHmxbCDdie :There are 1 users and 0 invisible on 1 servers
+[2019-09-29 12:48:52,118] :irc.hackernet.xyz 254 yHmxbCDdie 0 :channels formed
+[2019-09-29 12:48:52,118] :irc.hackernet.xyz 255 yHmxbCDdie :I have 1 clients and 0 servers
+[2019-09-29 12:48:52,118] :irc.hackernet.xyz 265 yHmxbCDdie :Current Local Users: 1  Max: 1
+[2019-09-29 12:48:52,118] :irc.hackernet.xyz 266 yHmxbCDdie :Current Global Users: 1  Max: 1
+[2019-09-29 12:48:52,118] :irc.hackernet.xyz 321 yHmxbCDdie Channel :Users Name
+[2019-09-29 12:48:52,118] :irc.hackernet.xyz 323 yHmxbCDdie :End of channel list.
+[2019-09-29 12:48:52,160] :irc.hackernet.xyz 364 yHmxbCDdie irc.hackernet.xyz irc.hackernet.xyz :0 Target IRC server on AD Labs
+[2019-09-29 12:48:52,163] :irc.hackernet.xyz 365 yHmxbCDdie * :End of /LINKS list.
+[2019-09-29 12:48:52,164] :irc.hackernet.xyz 366 yHmxbCDdie * :End of /NAMES list.
+[2019-09-29 12:48:52,164] join * not found in is_processing
+[2019-09-29 12:48:52,164] []
+[2019-09-29 12:48:52,164] PART *
+[2019-09-29 12:48:52,164] :irc.hackernet.xyz 401 yHmxbCDdie * :No such channel
+[2019-09-29 12:48:52,201] QUIT :
+[2019-09-29 12:48:55,205] ERROR :Closing link: (LLCwMvQuOQ@192.169.86.2) [Quit: ]
+[2019-09-29 12:48:55,206] Disconnected
+root@attackdefense:~/tools/ircsnapshot# irssi --connect 192.35.203.3 --nick hacker
+erot@attackdefense:~/tools/ircsnapshot# irssi --connect 192.35.203.3 --nick hack 
+
+[2]+  Stopped                 irssi --connect 192.35.203.3 --nick hacker
+
+**************** CONNECETED BUT HAD NO CHANNELS ***********************
+
+root@attackdefense:~/tools/ircsnapshot# adduser irc_user
+Adding user `irc_user' ...
+Adding new group `irc_user' (1000) ...
+Adding new user `irc_user' (1000) with group `irc_user' ...
+Creating home directory `/home/irc_user' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for irc_user
+Enter the new value, or press ENTER for the default
+        Full Name []: 
+        Room Number []: 
+        Work Phone []: 
+        Home Phone []: 
+        Other []: 
+Is the information correct? [Y/n] y
+root@attackdefense:~/tools/ircsnapshot# su irc_user
+ick hackerttackdefense:/root/tools/ircsnapshot$ irssi --connect 192.35.203.3 --h 
+Unknown option --hick
+ick hackerttackdefense:/root/tools/ircsnapshot$ irssi --connect 192.35.203.3 --ni
+
+[1]+  Stopped                 irssi --connect 192.35.203.3 --nick hacker
+irc_user@attackdefense:/root/tools/ircsnapshot$ ^C
+irc_user@attackdefense:/root/tools/ircsnapshot$ 
+
+****************** CONNECTED TO SERVER ************************
+following commands used on server
+/VERSION
+/HELP
+/LIST -YES
+/JOIN #CHANNEL
+/LEAVE
+/ADMIN  = gave server admin name
+

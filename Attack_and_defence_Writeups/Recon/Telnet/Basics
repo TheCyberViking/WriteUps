@@ -1,0 +1,22 @@
+Telnet Recon: Basics
+
+In this challenge we will look at the basics of Telnet server reconnaissance.  Please start the lab and answer the following questions:
+
+Questions
+
+Which Linux flavor (and version) the host OS of the target telnet server?
+Use the username dictionary /usr/share/metasploit-framework/data/wordlists/common_users.txt and password dictionary /usr/share/metasploit-framework/data/wordlists/password.lst to check if any of these credentials work on the system. List all found credentials.
+Find seven flags hidden on the server.
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1 
+
+Challenge:	
+1.	Password for user `administrator`:	=
+2.	Flag kept in user `administrator`s files : =
+

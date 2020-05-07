@@ -1,0 +1,38 @@
+Filtering Basics: HTTP = EASY
+
+HTTP is probably the most common and widely used protocol on the Internet. Unfortunately, HTTP is plain text and an attacker having access to the network can sniff and read the data within the packets effortlessly. In this lab, you will analyze and extract interesting information from the HTTP traffic using tshark. 
+
+
+Start the lab, locate the PCAP file in the current directory and use tshark to answer the following questions: 
+
+Questions:
+
+Set A:
+1. Command to show only the HTTP traffic from a PCAP file?
+2. Command to show only the IP packets sent from IP address 192.168.252.128 to IP address 52.32.74.91?
+3. Command to print only packets containing GET requests?
+4. Command to print only packets only source IP and URL for all GET request packets?
+
+Set B:
+1. How many HTTP packets contain the "password" string?
+2. What is the destination IP address for GET requests sent for New York Times (www.nytimes.com)?
+3. What is the session ID being used by 192.168.252.128 for Amazon India store (amazon.in)?
+4. What type of OS the machine on IP address 192.168.252.128 is using (i.e. Windows/Linux/MacOS/Solaris/Unix/BSD)? Bonus: Can you also guess the distribution/flavor?
+
+
+
+only show http traffic = tshark -Y ‘http’ -r HTTP_traffic.pcap
+
+only show packets from one ip to another = tshark -r HTTP_traffic.pcap -Y "ip.src==192.168.252.128 && ip.dst==52.32.74.91"
+
+only show all GET Requests = tshark -r HTTP_traffic.pcap -Y "http.request.method==GET"
+
+source ip and url for all get requests = tshark -r HTTP_traffic.pcap -Y "http.request.method==GET" -Tfields -e frame.time -e ip.src -e http.request.full_uri
+
+how many packets contain passowrd stirgs = tshark -r HTTP_traffic.pcap -Y "http contains password” = 4
+
+what is the destingation ip = tshark -r HTTP_traffic.pcap -Y "http.request.method==GET && http.host==www.nytimes.com" -Tfields -e ip.dst = 170.149.159.130 
+
+what ses id being used by amazon india store = tshark -r HTTP_traffic.pcap -Y "ip contains amazon.in && ip.src==192.168.252.128" -Tfields -e ip.src -e http.cookie  = 278-7381968-4337153
+
+what OS is on IP = tshark -r HTTP_traffic.pcap -Y "ip.src==192.168.252.128 && http" -Tfields -e http.user_agent = BONUS: Kali Linux

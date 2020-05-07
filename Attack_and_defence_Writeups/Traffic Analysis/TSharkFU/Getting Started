@@ -1,0 +1,38 @@
+Getting Started: Tshark = EASY
+
+Tshark is a command line tool created by the Wireshark team and shares the same powerful parsing engine as Wireshark. It is capable of doing most things we've come to love Wireshark for, but with the "from command line" advantage. This makes it ideal for batch analysis, offline processing and routine automation of traffic analysis tasks. In this course, we will explore many of these capabilities. It is assumed you have a basic working knowledge of Wireshark and traffic analysis. We have created a detailed course on Wireshark on Pentester Academy.  In this series of labs, we will teach you how to use Tshark effectively! So, let's get started!
+
+Questions:
+
+Set A:
+
+Which version of Tshark is installed in the lab?
+Find all Tshark supported network interfaces for monitoring
+What is the Tshark command to sniff on eth0? Why did this command fail? 
+
+
+Set B:
+
+Tshark supports PCAP files. The lab environment has a sample file: HTTP_traffic.pcap. How can you read this file in Tshark and display the packet list on the console? 
+How can you find the total number of packets in HTTP_traffic.pcap?
+Tshark command to read the first 100 packets only from HTTP_traffic.pcap? 
+Print the list of protocols in HTTP_traffic.pcap  
+
+
+
+Show version of Tshark = tshark -v 
+
+find supported inters = tshark -D
+
+why did tshark -i eth0 fail = the current user doesnt not haver the permissions to run this command
+
+reading at pcap file = tshark -r HTTP_traffic.pcap 
+
+find tottal number of packets = tshark -r HTTP_traffic.pcap | wc -l 
+
+only read first 100 packets = tshark -r HTTP_traffic.pcap -c 100
+
+print all protocols in the pcap = tshark -r HTTP_traffic.pcap -z io,phs -q
+
+
+

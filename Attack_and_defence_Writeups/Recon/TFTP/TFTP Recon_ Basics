@@ -1,0 +1,51 @@
+In this challenge we will look at the basics of TFTP server reconnaissance. Please start the lab and answer the following questions:
+
+Questions
+
+TFTP service running on which port?
+What commands can be used to connect to TFTP service using TFTP client and  list all available commands.
+What command can be used to check the current state?
+What command can be used to set the verbose mode on.
+What command can be used to download the “flag” file from the TFTP server.
+What command can be used to set the packet trace on? Download the “flag” file from the TFTP server to observe the difference with trace on.
+What command can be used to upload a PHP file to the TFTP server.
+Find out if any of the files present in file list /usr/share/metasploit-framework/data/wordlists/tftp.txt are present on the TFTP server using suitable metasploit module. List the files found.
+Put a file router.bin file on the TFTP server using suitable metasploit module.
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1
+
+Answers:
+Q1. TFTP service running on which port?
+A. 69
+
+Q2. What commands can be used to connect to TFTP service using TFTP client and  list all available commands.
+A.  tftp
+     connect 192.13.185.3
+     ? 
+
+Q3. What command can be used to check the current state?
+A. status
+
+Q4. What command can be used to set the verbose mode on.
+A. verbose
+
+Q5. What command can be used to download the “flag” file from the TFTP server.
+A. get flag
+
+Q6. What command can be used to set the packet trace on? Download the “flag” file from the TFTP server to observe the difference with trace on.
+A. trace
+
+Q7. What command can be used to upload a PHP file to the TFTP server.
+A. put test.php
+
+Q8. Find out if any of the files present in file list /usr/share/metasploit-framework/data/wordlists/tftp.txt are present on the TFTP server using suitable metasploit module. List the files found.
+A. 46xxupgrade.scr, boot.bin, default.cfg
+
+Q9. Put a file router.bin file on the TFTP server using suitable metasploit module.
+A. Use tftp_transfer_util metasploit module

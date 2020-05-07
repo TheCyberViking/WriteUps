@@ -1,0 +1,18 @@
+WEP Cracking Advanced - Hard
+
+Generally, an attacker manages to collect enough WEP encrypted packets so that a cracking program such as aircrack-ng succeeds in cracking the key! However, it might be so that enough packets are not currently available to crack WEP and the attacker has to go offline to try and crack it. In such case, he can use a Dictionary or Bruteforce attack and see if it works. In this exercise, you will do exactly that! 
+
+Objective:
+
+Write a program in python to conduct a dictionary attack on challenge file "WEP-Advanced.cap" to recover the WEP key. Both files are present in the user home directory. Recover the secret key and also write the decrypted packet in a new PCAP file.
+
+Password list source: https://github.com/duyetdev/bruteforce-database/blob/master/1000000-password-seclists.txt
+
+The Script used can be found in this folder
+
+write a custom script to automate the crack in python 
+
+
+Running the script with the unput -  python cracker.py 1000000-password-seclists.txt
+
+Answer =  tudes

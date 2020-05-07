@@ -1,0 +1,13 @@
+WEP Cracking - EASY
+Wired Equivalent Privacy (WEP) standard was the first attempt of WiFi Alliance to secure the WiFi traffic. The scheme was found to be vulnerable to attack and it was succeeded by WPA standards. But, believe it or not, WEP is still encountered in wild for different reasons which vary from supporting legacy devices to selecting WEP by mistake while configuring WiFi AP.
+
+Objective:
+
+The challenge PCAP can be found in the home folder of the user. It contain traffic from a WEP secured SSID "SecurityTube". The objective is clear. Launch cracking attack and recover the secret shared key used.
+
+
+View the pcap file - airodump-ng -r WEP-Cracking.cap and get the BSSID
+
+crack the pcap file - aircrack-ng -b 00:21:91:d2:8e:25 WEP-Cracking.cap
+
+answer = 12:34:56:78:90

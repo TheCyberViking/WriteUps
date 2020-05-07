@@ -1,0 +1,57 @@
+SSH Recon: Basic
+
+In this challenge we will look at the basics of SSH server reconnaissance. Please start the lab and answer the following questions:
+
+Questions
+
+What is the version of SSH server.
+Fetch the banner using netcat and check the version of SSH server.
+Fetch pre-login SSH banner.
+How many “encryption_algorithms” are supported by the SSH server.
+What is the ssh-rsa host key being used by the SSH server.
+Which authentication method is being used by the SSH server for user “student”.
+Which authentication method is being used by the SSH server for user “admin”.
+Fetch the flag from /home/student/FLAG by using nmap ssh-run script.
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1
+
+
+Answers
+
+Q1. What is the version of SSH server.
+
+A. OpenSSH 7.2p2 Ubuntu 4ubuntu2.6
+
+Q2. Fetch the banner using netcat and check the version of SSH server.
+
+A. SSH-2.0-OpenSSH_7.2p2 Ubuntu-4ubuntu2.6
+
+Q3. Fetch pre-login SSH banner.
+
+A. Welcome to attack defense ssh recon lab!!
+
+Q4. How many “encryption_algorithms” are supported by the SSH server.
+
+A. 6
+
+Q5. What is the ssh-rsa host key being used by the SSH server.
+
+A. AAAAB3NzaC1yc2EAAAADAQABAAABAQC1fkJK7F8yxf3vewEcLYHljBnKTAiRqzFxkFo6lqyew73ATL2Abyh6at/oOmBSlPI90rtAMA6jQGJ+0HlHgf7mkjz5+CBo9j2VPu1bejYtcxpqpHcL5Bp12wgey1zup74fgd+yOzILjtgbnDOw1+HSkXqN79d+4BnK0QF6T9YnkHvBhZyjzIDmjonDy92yVBAIoB6Rdp0w7nzFz3aN9gzB5MW/nSmgc4qp7R6xtzGaqZKp1H3W3McZO3RELjGzvHOdRkAKL7n2kyVAraSUrR0Oo5m5e/sXrITYi9y0X6p2PTUfYiYvgkv/3xUF+5YDDA33AJvv8BblnRcRRZ74BxaD
+
+Q6. Which authentication method is being used by the SSH server for user “student”.
+
+A. none_auth
+
+Q7. Which authentication method is being used by the SSH server for user “admin”.
+
+A. publickey, password
+
+Q8. Fetch the flag from /home/student/FLAG by using nmap ssh-run script.
+
+A. e1e3c0c9d409f594afdb18fe9ce0ffec

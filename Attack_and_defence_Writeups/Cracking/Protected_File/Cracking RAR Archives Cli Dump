@@ -1,0 +1,57 @@
+student@attackdefense:~$ ls
+1000000-password-seclists.txt  archive.rar
+student@attackdefense:~$ rar2jogn archive.rar
+bash: rar2jogn: command not found
+student@attackdefense:~$ rar2john archive.rar
+archive.rar:$rar5$16$50d889a2c6441510dd0c8ab76dde4fd6$15$697757daca178f6f88135491827bdad6$8$e13f0c4d2f8286d5
+student@attackdefense:~$ ls
+1000000-password-seclists.txt  archive.rar
+student@attackdefense:~$ nano hash.txt
+student@attackdefense:~$ ls
+1000000-password-seclists.txt  archive.rar  hash.txt
+student@attackdefense:~$ john hash.txt --wordlist 1000000-password-seclists.txt
+Warning: only loading hashes of type "RAR5", but also saw type "tripcode"
+Use the "--format=tripcode" option to force loading hashes of that type instead
+Warning: only loading hashes of type "RAR5", but also saw type "descrypt"
+Use the "--format=descrypt" option to force loading hashes of that type instead
+Warning: only loading hashes of type "RAR5", but also saw type "pix-md5"
+Use the "--format=pix-md5" option to force loading hashes of that type instead
+Warning: only loading hashes of type "RAR5", but also saw type "mysql"
+Use the "--format=mysql" option to force loading hashes of that type instead
+Warning: only loading hashes of type "RAR5", but also saw type "oracle"
+Use the "--format=oracle" option to force loading hashes of that type instead
+Using default input encoding: UTF-8
+Loaded 1 password hash (RAR5 [PBKDF2-SHA256 256/256 AVX2 8x])
+Cost 1 (iteration count) is 32768 for all loaded hashes
+Will run 20 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+1qaz2wsx         (?)
+1g 0:00:00:12 DONE (2019-03-06 21:15) 0.07886g/s 201.8p/s 201.8c/s 201.8C/s 1234qwer..ford
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+student@attackdefense:~$ john hash.txt --wordlist 1000000-password-seclists.txt --show
+Invalid options combination or duplicate option: "--show"
+student@attackdefense:~$ john --show
+Password files required, but none specified
+student@attackdefense:~$ john hash.txt --show
+?:1qaz2wsx
+
+1 password hash cracked, 0 left
+student@attackdefense:~$
+
+student@attackdefense:~$ unrar e archive.rar
+
+UNRAR 5.30 beta 2 freeware      Copyright (c) 1993-2015 Alexander Roshal
+
+Enter password (will not be echoed) for archive.rar:
+
+
+Extracting from archive.rar
+
+Extracting  token                                                     OK
+All OK
+student@attackdefense:~$ ls
+1000000-password-seclists.txt  archive.rar  hash.txt  token
+student@attackdefense:~$ cat token
+75f2de1367df5838697b0df8dc23c624
+student@attackdefense:~$

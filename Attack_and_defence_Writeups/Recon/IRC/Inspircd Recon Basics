@@ -1,0 +1,23 @@
+In this challenge we will look at the basics of Inspircd IRC server reconnaissance. Please start the lab and answer the following questions:
+
+Questions
+
+What is the host name of the IRC server running on the target machine? Also grab the banner.
+How many users currently present on the server? Use nmap scripts.
+Scan the target server with “ircsnapshot” tool to see what information can be gathered.
+Can you connect to IRC server using irssi client with local user root?
+Connect to the server and answer the following questions:
+a. What is the version of the IRC server?
+b. What command can list all available/supported commands?
+c. What command can list channels?
+d. What command is used to switch/join a channel?
+e. What command is used to leave  a channel?
+f. What command is used to view details of server admin?
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1

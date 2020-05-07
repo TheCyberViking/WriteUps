@@ -1,0 +1,54 @@
+In this challenge we will look at the basics of ProFTP server reconnaissance.  Please start the lab and answer the following questions:
+
+Questions
+
+What is the version of FTP server?
+Use the username dictionary /usr/share/metasploit-framework/data/wordlists/common_users.txt and password dictionary /usr/share/metasploit-framework/data/wordlists/password.lst to check if any of these credentials work on the system. List all found credentials.
+Find the password of user “sysadmin” using nmap script.
+Find seven flags hidden on the server.
+
+
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1 
+
+
+
+The answers are given below:
+
+Answers
+Q1. What is the version of FTP server?
+A. 1.3.5a
+
+Q2. Use the username dictionary /usr/share/metasploit-framework/data/wordlists/common_users.txt and password dictionary /usr/share/metasploit-framework/data/wordlists/password.lst to check if any of these credentials work on the system. List all found credentials.
+A. Credentials 
+
+username: sysadmin   password: 654321
+username: rooty   password: qwerty
+username: demo   password: butterfly
+username: auditor   password: chocolate
+username: anon   password: purple
+username: administrator   password: tweety
+username: diag   password: tigger
+
+Q3. Find the password of user “sysadmin” using nmap script.
+A. 654321
+
+Q4. Find seven flags hidden on the server.
+A. Login to FTP server using different users and look for secret.txt
+
+Bellow are the 7 recovered flags from the FTP
+
+Flag 1 - 260ca9dd8a4577fc00b7bd5810298076 - sysadmin
+Flag 2 - e529a9cea4a728eb9c5828b13b22844c - rooty
+Flag 3 - d6a6bc0db10694a2d90e3a69648f3a03 - demo
+Flag 4 - 098f6bcd4621d373cade4e832627b4f6 - auditor
+Flag 5 - 1bc29b36f623ba82aaf6724fd3b16718 - anon
+Flag 6 - 21232f297a57a5a743894a0e4a801fc3 - administrator
+Flag 7 - 12a032ce9179c32a6c7ab397b9d871fa - diag
+

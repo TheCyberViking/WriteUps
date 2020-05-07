@@ -1,0 +1,21 @@
+In this challenge we will look at the basics of Unrealircd IRC server reconnaissance. Please start the lab and answer the following questions:
+
+Questions
+
+What is the host name of the IRC server running on the target machine? Also grab the banner.
+Scan the target server with “ircsnapshot” tool and find out the server software name with version.
+Connect to IRC server using irssi client and answer the following questions:
+a. What is the version of the IRC server?
+b. What command can list all available/supported commands?
+c. What command can list channels?
+d. What command is used to switch/join a channel?
+e. What command is used to leave  a channel?
+f. What command is used to switch to operator mode? Operator username is bobs and password is test@123321?
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1 

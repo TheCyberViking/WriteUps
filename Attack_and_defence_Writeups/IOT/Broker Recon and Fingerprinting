@@ -1,0 +1,51 @@
+In this challenge we will look at the basics of MQTT server reconnaissance.  Please start the lab and answer the following questions:
+
+Please answer the following answers:
+
+Is MQTT running on the server? If yes, what is the port for MQTT over TLS?
+What is the name and version of the MQTT server?
+What command can be used to enumerate the MQTT server using NMAP script?
+What is the welcome message set for topic "industrial"?
+Which topic is being used by the sensors to publish their updates?
+Session keys are being published on a topic periodically. What is the approx time period between appearance of two consecutive session-keys?
+What is the command to post the content of file /etc/passwd to topic "confidential"?
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1 
+
+
+
+
+
+Q1. Is MQTT running on the server? If yes, what is the port for MQTT over TLS?
+
+A.  Yes, 8883
+
+Q2. What is the name and version of the MQTT server?
+
+A. mosquitto version 1.4.15
+
+Q3. What command can be used to enumerate the MQTT server using NMAP script?
+
+A. nmap -p1883 -sV -sC 192.78.197.3
+
+Q4. What is the welcome message set for topic “industrial”?
+
+A. Critical Infrastructure Grid of Gotham City Software Version v9.10\nStatus: Running   Security Alerts: 0
+
+Q5. Which topic is being used by the sensors to publish their updates?
+
+A. sensors
+
+Q6. Session keys are being published on a topic periodically. What is the approx time period between appearance of two consecutive session-keys?
+
+A. 30 seconds
+
+Q7. What is the command to post the content of file /etc/passwd to topic "confidential"?	
+
+A. mosquitto_pub -t confidential -h 192.78.197.3 -f /etc/passwd

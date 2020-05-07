@@ -1,0 +1,35 @@
+In this challenge we will look at the basics of NTP server reconnaissance. Please start the lab and answer the following questions:
+
+Questions
+
+What is the version of the NTP server? 
+What is the command used to query current time from the ntp server using ntpq?
+What is the command used to query current time from the ntp server using ntpdate?
+What is the kernel version of target machine running NTP server?
+How many pool server are being used by the target NTP?
+Instructions: 
+
+
+This lab is dedicated to you! No other users are on this network :) 
+Once you start the lab, you will have access to a root terminal of a Kali instance
+Your Kali has an interface with IP address 192.X.Y.Z. Run "ip addr" to know the values of X and Y.
+The Target machine should be located at the IP address 192.X.Y.3. 
+Do not attack the gateway located at IP address 192.X.Y.1
+
+
+Answers
+
+Q1. What is the version of the NTP server? 
+A. v4
+
+Q2. What is the command used to query current time from the ntp server using ntpq?
+A. ntpq -c "rv 0 clock" <ip_address>
+
+Q3. What is the command used to query current time from the ntp server using ntpdate?
+A. ntpdate -q <ip_address>
+
+Q4. What is the kernel version of target machine running NTP server?
+A. 4.15.0-32-generic
+
+Q5. How many pool server are being used by the target NTP?
+A. 5

